@@ -6,6 +6,7 @@ typedef struct Packet Packet;
 struct Packet
 {
 	int dateCreation;
+	int bit;
 };
 
 typedef struct Buffer Buffer;
