@@ -7,7 +7,7 @@ typedef struct Packet Packet;
 struct Packet
 {
 	int dateCreation;
-	int bit;
+	int bitsRestants;
 };
 
 typedef struct Buffer Buffer;
@@ -20,9 +20,10 @@ struct Buffer
 typedef struct User User;
 struct User
 {
-	int debitActuel, debitMoyen;
-	int debitsActuels[128][5];
-	Buffer sendBuffer[BUFFERS_PER_USER];
+	int bufferVide;
+	int debitMoyen;
+	int debitsActuels[128];
+	Buffer bufferChain;
 };
 
 typedef struct Antenne Antenne;
@@ -32,45 +33,61 @@ struct Antenne
 	User usersFar[NB_USERS/2];
 };
 
-int trameToSend[128][5];
+void initMatriceDebits(Antenne *antenne);
 
-<<<<<<< HEAD
-int initMatriceDebits(Antenne *antenne);
-=======
-int RR (){
-	/*
-	alloue les ressources au tour par tour
-	*/
-	
-}
-
-int MaxSNR (){
-	/*
-	alloue les ressources en fonctions du meilleur debit possible
-	*/
-}
-
->>>>>>> ed9aa9f45b2712eef5d54ae4566b0feb47281f8d
 int main(){
-	Antenne* monAntenne;
-	
-	//---INITIALISATIONS---
-	if(initAntenne(monAntenne) == -1){
-		printf("Erreur lors de l'initialisation de l'antenne\n");
-	}
-	else{printf("Initialisation Antenne: OK\n");}
 
+	long actualTime = 0;
+	int nb_tours;
+	int i, x, y;
+
+	Antenne* monAntenne;
+	int trameToSend[128][5];
+
+	//---INITIALISATIONS---
+	printf("\nSIMULATION NTR\n");
+	printf("Nombre de tours pour la simulation: ");
+	scanf("%d", &nb_tours);
+
+	
 
 	//---BOUCLE PRINCIPALE---
-	//Initilisations des matrices de débit des utilisateurs  
+	for(i = 0; i < nb_tours; i++){
 
+		//Initialisation des paquets utilisateurs
 
+		//Initilisations des débits des utilisateurs
+
+		//Application de l'algorithme et remplissage de trameToSend
+
+		// * ENVOI DE LA TRAME * 
+
+		//Mise à jours des délais
+
+		//Nettoyage de trameToSend
+		for(x = 0; x < 128; x++){
+			for(y = 0; y < 5; y++){
+				trameToSend[x][y] = 0;
+			}
+		}
+
+		//Incrémentation du temps
+		actualTime += 10;
+
+	}
+}
+void initAntenne(Antenne *antenne){
+	int i = 0;
+
+	for(i = 0; i<NB_USERS/2; i++)
+	{
+		antenne->usersFar[i].bufferChain.nextBuffer = NULL;
+		antenne->usersFar[i].bufferVide = 1;
+		antenne->usersNear[i].bufferChain.nextBuffer = NULL;
+		antenne->usersNear[i]bufferVide = 1;
+	}
 }
 
-int initMatriceDebits(Antenne *antenne){
-	int i;
+void initMatriceDebits(Antenne *antenne){
 
-	for(i = 0; i < NB_USERS/2; i++){
-		
-	}
 }
