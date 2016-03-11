@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define NB_USERS
+#define BUFFERS_PER_USER
 
 typedef struct Packet Packet;
 struct Packet
@@ -16,11 +17,16 @@ struct Buffer
 	Buffer* nextBuffer = NULL;
 };
 
+typedef struct User User;
+struct User
+{
+	int debitActuel, debitMoyen;
+	Buffer sendBuffer[BUFFERS_PER_USER];
+};
 typedef struct Antenne Antenne;
 struct Antenne
 {
-	//Creation d'un tableau contenant le premier buffer de chaque utilisateur
-	Buffer sendBuffer[NB_USERS];
+	
 };
 
 int trameToSend[128][5];
