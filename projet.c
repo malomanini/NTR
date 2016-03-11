@@ -34,7 +34,23 @@ struct Antenne
 
 int trameToSend[128][5];
 
+<<<<<<< HEAD
 int initMatriceDebits(Antenne *antenne);
+=======
+int RR (){
+	/*
+	alloue les ressources au tour par tour
+	*/
+	
+}
+
+int MaxSNR (){
+	/*
+	alloue les ressources en fonctions du meilleur debit possible
+	*/
+}
+
+>>>>>>> ed9aa9f45b2712eef5d54ae4566b0feb47281f8d
 int main(){
 	Antenne* monAntenne;
 	
