@@ -9,7 +9,7 @@ all: $(EXEC)
 simulation: fichier.o main.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-fichier.o: projet.c
+fichier.o: projet.c distribution.c RR.c
 	$(CC) -o $@ -c $< $(CFLAGS)
 
 main.o: main.c
