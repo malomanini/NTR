@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "initialisation.h"
+
 void initAntenne(Antenne *antenne){
 	int i = 0;
 
