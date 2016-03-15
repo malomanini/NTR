@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "initialisation.h"
+#include "struct.h"
 
 void initPacket(Packet *packet){
 	packet->dateCreation=0;
@@ -49,6 +50,8 @@ void initMatriceDebits(Antenne *antenne){
 	}
 }
 
+void consumeBit(int currentUser, int subCarrier){
+	if(currentUser>(NB_USERS/2)){
 
-
-
+	}
+}
