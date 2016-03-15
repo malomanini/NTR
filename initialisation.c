@@ -13,14 +13,15 @@ void initBuffer(Buffer *bufferinit, Buffer *nextBuffer, Packet thePacket){
 	bufferinit->nextBuffer=nextBuffer;
 }
 
-void initUser(User *user){
+void initUser(User *user, Buffer, bufferchain){
+	int i = 0 ;
 	User->bufferVide=0;
 	User->debitMoyen=0;
 	for(i = 0; i<128; i++)
 	{
 		User->debitsActuels[i]=0;
 	}
-	User->bufferChain=NULL;
+	User->bufferChain=bufferchain;
 }
 
 void initAntenne(Antenne *antenne){

@@ -35,6 +35,11 @@ struct Antenne
 	User usersFar[NB_USERS/2];
 };
 
+
+
+void initPacket(Packet *packet);
+void initBuffer(Buffer *bufferinit, Buffer *nextBuffer, Packet thePacket);
+void initUser(User *user, Buffer, bufferchain);
 void initAntenne(Antenne *antenne);
 void initMatriceDebits(Antenne *antenne);
 
