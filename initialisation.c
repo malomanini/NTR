@@ -16,5 +16,14 @@ void initAntenne(Antenne *antenne){
 }
 
 void initMatriceDebits(Antenne *antenne){
+	int i = 0;
+	int j = 0;
 
+	for(i = 0; i<NB_USERS/2; i++)
+	{
+		for(j = 0; j<128; i++){
+			antenne->usersFar[i].debitsActuels[j] = getSNR(3);
+			antenne->usersNear[i].debitsActuels[j] = getSNR(5);
+		}
+	}
 }

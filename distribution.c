@@ -5,10 +5,10 @@
 #include "distribution.h"
 #include "initialisation.h"
 
-int getSNR(User current){
+int getSNR(int distance){
   int r;
   srand(time(NULL));
-  r = rand()% ((current.debitMoyen)+2) ;
+  r = (rand() % distance)*2 ;
 
   return r;
 }

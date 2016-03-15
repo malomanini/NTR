@@ -3,6 +3,6 @@
 #define DISTRIBUTION_H
 
 
-int getSNR(User current);
+int getSNR(int distance);
 
 #endif
