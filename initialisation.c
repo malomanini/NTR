@@ -27,3 +27,13 @@ void initMatriceDebits(Antenne *antenne){
 		}
 	}
 }
+
+void initUser(User *user){
+	User->bufferVide=0;
+	User->debitMoyen=0;
+	for(i = 0; i<128; i++)
+	{
+		User->debitsActuels[i]=0;
+	}
+	User->bufferChain=NULL;
+}
