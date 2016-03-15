@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "struct.h"
 #include "distribution.h"
 #include "RR.h"
 #include "initialisation.h"
@@ -49,6 +50,6 @@ int main(int argc, char *argv[]){
 		actualTime += 10;
 
 	}
-	
+
 }
 

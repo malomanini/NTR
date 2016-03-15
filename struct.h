@@ -1,5 +1,6 @@
 #define NB_USERS 10
 #define BUFFERS_PER_USER 10
+#define PACKETS_CREATION_RATIO 50
 
 typedef struct Packet Packet;
 struct Packet

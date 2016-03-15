@@ -55,7 +55,9 @@ void initMatriceDebits(Antenne *antenne){
 void consumeBit(int currentUser, int subCarrier){
 	//User near
 	if(currentUser<(NB_USERS/2)){
-
+		currentUser->firstBuffer = currentUser->firstBuffer->nextBuffer;
+		if(currentUser->firstBuffer == NULL)
+			currentUser->bufferVide = 1;
 	}
 	//User far
 	else{
