@@ -14,7 +14,7 @@ void initBuffer(Buffer *bufferinit, Buffer *nextBuffer, Packet thePacket){
 	bufferinit->nextBuffer=nextBuffer;
 }
 
-void initUser(User *user, Buffer, bufferchain){
+void initUser(User *user, Buffer bufferchain){
 	int i = 0 ;
 	user->bufferVide=0;
 	user->debitMoyen=0;
@@ -22,7 +22,7 @@ void initUser(User *user, Buffer, bufferchain){
 	{
 		user->debitsActuels[i]=0;
 	}
-	user->bufferChain=bufferchain;
+	user->firstBuffer=bufferchain;
 }
 
 void initAntenne(Antenne *antenne){
@@ -30,10 +30,12 @@ void initAntenne(Antenne *antenne){
 
 	for(i = 0; i<NB_USERS/2; i++)
 	{
-		antenne->usersFar[i].bufferChain.nextBuffer = NULL;
+		antenne->usersFar[i].firstBuffer.nextBuffer = NULL;
+		antenne->usersFar[i].lastBuffer.nextBuffer = NULL;
 		antenne->usersFar[i].bufferVide = 1;
-		antenne->usersNear[i].bufferChain.nextBuffer = NULL;
-		antenne->usersNear[i]bufferVide = 1;
+		antenne->usersNear[i].firstBuffer.nextBuffer = NULL;
+		antenne->usersNear[i].lastBuffer.nextBuffer = NULL;
+		antenne->usersNear[i].bufferVide = 1;
 	}
 }
 
