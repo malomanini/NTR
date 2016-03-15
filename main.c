@@ -9,6 +9,7 @@
 int main(int argc, char *argv[]){
 
 	long actualTime = 0;
+
 	int nb_tours;
 	int i, x, y;
 
@@ -43,9 +44,11 @@ int main(int argc, char *argv[]){
 			}
 		}
 
+
 		/*Incrémentation du temps*/
 		actualTime += 10;
 
 	}
+	
 }
 

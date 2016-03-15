@@ -22,10 +22,12 @@ struct Buffer
 typedef struct User User;
 struct User
 {
+
 	int bufferVide;
 	int debitMoyen;
 	int debitsActuels[128];
-	Buffer bufferChain;
+	Buffer firstBuffer;
+	Buffer lastBuffer;
 };
 
 typedef struct Antenne Antenne;
@@ -39,7 +41,7 @@ struct Antenne
 
 void initPacket(Packet *packet);
 void initBuffer(Buffer *bufferinit, Buffer *nextBuffer, Packet thePacket);
-void initUser(User *user, Buffer, bufferchain);
+void initUser(User *user, Buffer bufferchain);
 void initAntenne(Antenne *antenne);
 void initMatriceDebits(Antenne *antenne);
 
