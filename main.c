@@ -15,34 +15,34 @@ int main(int argc, char *argv[]){
 	Antenne* monAntenne;
 	int trameToSend[128][5];
 
-	//---INITIALISATIONS---
+	/*---INITIALISATIONS---*/
 	printf("\nSIMULATION NTR\n");
 	printf("Nombre de tours pour la simulation: ");
 	scanf("%d", &nb_tours);
 
 	
 
-	//---BOUCLE PRINCIPALE---
+	/*---BOUCLE PRINCIPALE---*/
 	for(i = 0; i < nb_tours; i++){
 
-		//Initialisation des paquets utilisateurs
+		/*Initialisation des paquets utilisateurs*/
 
-		//Initilisations des débits des utilisateurs
+		/*Initilisations des débits des utilisateurs*/
 
-		//Application de l'algorithme et remplissage de trameToSend
+		/*Application de l'algorithme et remplissage de trameToSend*/
 
-		// * ENVOI DE LA TRAME * 
+		/*ENVOI DE LA TRAME */
 
-		//Mise à jours des délais
+		/*Mise à jours des délais*/
 
-		//Nettoyage de trameToSend
+		/*Nettoyage de trameToSend*/
 		for(x = 0; x < 128; x++){
 			for(y = 0; y < 5; y++){
 				trameToSend[x][y] = 0;
 			}
 		}
 
-		//Incrémentation du temps
+		/*Incrémentation du temps*/
 		actualTime += 10;
 
 	}

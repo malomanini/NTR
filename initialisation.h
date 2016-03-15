@@ -38,4 +38,4 @@ struct Antenne
 void initAntenne(Antenne *antenne);
 void initMatriceDebits(Antenne *antenne);
 
-#endif // INITIALISATION_H
+#endif /* INITIALISATION_H*/
