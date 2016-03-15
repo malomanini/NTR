@@ -1,8 +1,6 @@
 #ifndef RR_H
 #define RR_H
 
-#include "RR.h"
-
-int RR ();
+int RR(int trameToSend[][5]);
 
 #endif

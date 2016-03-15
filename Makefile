@@ -4,19 +4,15 @@ CFLAGS=-W -Wall -ansi -pedantic
 LDFLAGS=
 EXEC=simulation
 
-all: $(EXEC)
+all: simulation
 
-simulation: fichier.o main.o
-	$(CC) -o $@ $^ $(LDFLAGS)
-
-fichier.o: distribution.c RR.c initialisation.c
-	$(CC) -o $@ -c $< $(CFLAGS)
-
-main.o: main.c distribution.h RR.h initialisation.h
-	$(CC) -o $@ -c $< $(CFLAGS)
-
+simulation: main.o RR.o initialisation.o distribution.o
+	gcc -o simulation main.o RR.o initialisation.o distribution.o
+RR.o: RR.h RR.c distribution.h initialisation.h
+	gcc -c RR.c
+initialisation.o: initialisation.c initialisation.h  
+	gcc -c initialisation.c
+distribution.o: distribution.h distribution.c initialisation.h
+	gcc -c distribution.c
 clean:
 	rm -rf *.o
-
-mrproper: clean
-	rm -rf $(EXEC)

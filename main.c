@@ -20,6 +20,7 @@ int main(int argc, char *argv[]){
 	printf("Nombre de tours pour la simulation: ");
 	scanf("%d", &nb_tours);
 
+		initAntenne(monAntenne);
 	
 
 	/*---BOUCLE PRINCIPALE---*/
@@ -30,7 +31,7 @@ int main(int argc, char *argv[]){
 		/*Initilisations des débits des utilisateurs*/
 
 		/*Application de l'algorithme et remplissage de trameToSend*/
-
+		RR(trameToSend);
 		/*ENVOI DE LA TRAME */
 
 		/*Mise à jours des délais*/
