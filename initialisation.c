@@ -3,6 +3,26 @@
 
 #include "initialisation.h"
 
+void initPacket(Packet *packet){
+	packet->dateCreation=0;
+	packet->bitsRestants=0;
+}
+
+void initBuffer(Buffer *bufferinit, Buffer *nextBuffer, Packet thePacket){
+	bufferinit->thePacket=thePacket;
+	bufferinit->nextBuffer=nextBuffer;
+}
+
+void initUser(User *user){
+	User->bufferVide=0;
+	User->debitMoyen=0;
+	for(i = 0; i<128; i++)
+	{
+		User->debitsActuels[i]=0;
+	}
+	User->bufferChain=NULL;
+}
+
 void initAntenne(Antenne *antenne){
 	int i = 0;
 
@@ -28,12 +48,6 @@ void initMatriceDebits(Antenne *antenne){
 	}
 }
 
-void initUser(User *user){
-	User->bufferVide=0;
-	User->debitMoyen=0;
-	for(i = 0; i<128; i++)
-	{
-		User->debitsActuels[i]=0;
-	}
-	User->bufferChain=NULL;
-}
+
+
+
