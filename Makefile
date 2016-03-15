@@ -6,8 +6,10 @@ EXEC=simulation
 
 all: simulation
 
-simulation: main.o RR.o initialisation.o distribution.o
+simulation: main.o struct.o RR.o initialisation.o distribution.o
 	gcc -o simulation main.o RR.o initialisation.o distribution.o
+struct.o: struct.h
+	gcc -c struct.h
 RR.o: RR.h RR.c distribution.h initialisation.h
 	gcc -c RR.c
 initialisation.o: initialisation.c initialisation.h  
