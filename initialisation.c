@@ -53,9 +53,22 @@ void initMatriceDebits(Antenne *antenne){
 	}
 }
 
+void produceBit(Antenne *antenne){
+	int i = 0;
+
+	for(i = 0; i < (NB_USERS/2); i++){
+
+	}
+	for(i = 0; i < (NB_USERS/2); i++){
+		
+	}
+}
+
+
 void consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 	/*NearUser*/
 
+	//User near
 	if(currentUser<(NB_USERS/2)){
 		antenne->usersNear[currentUser].firstBuffer.thePacket.bitsRestants = antenne->usersNear[currentUser].firstBuffer.thePacket.bitsRestants - antenne->usersNear[currentUser].debitsActuels[subCarrier];
 		if(antenne->usersNear[currentUser].firstBuffer.thePacket.bitsRestants <= 0){
