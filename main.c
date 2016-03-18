@@ -11,7 +11,7 @@ int main(int argc, char *argv[]){
 
 	long actualTime = 0;
 
-	int nb_tours;
+	int nb_tours = 1000;
 	int i, x, y;
 
 	Antenne* monAntenne;
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]){
 
 
 		/*Incrémentation du temps*/
-		actualTime += 10;
+		actualTime += 2;
 
 	}
 	printf("FIN du programme");

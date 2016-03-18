@@ -6,7 +6,7 @@
 #include "distribution.h"
 #include "initialisation.h"
 
-void RR (Antenne *antenne){
+void RR(){
 	int i = 0;
 	int j = 0;
 	int currentUser = 0;
