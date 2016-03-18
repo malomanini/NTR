@@ -1,3 +1,6 @@
+#ifndef STRUCT_H
+#define STRUCT_H
+
 #define NB_USERS 10
 #define BUFFERS_PER_USER 10
 #define PACKETS_CREATION_RATIO 50
@@ -33,3 +36,5 @@ struct Antenne
 	User usersNear[NB_USERS/2];
 	User usersFar[NB_USERS/2];
 };
+
+#endif
