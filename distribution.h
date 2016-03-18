@@ -1,4 +1,4 @@
-#include "struct.h"
+
 #include "initialisation.h"
 
 #ifndef DISTRIBUTION_H
