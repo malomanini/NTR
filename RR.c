@@ -6,14 +6,14 @@
 #include "distribution.h"
 #include "initialisation.h"
 
-void RR(){
+void RR(Antenne *antenne){
 	int i = 0;
 	int j = 0;
 	int currentUser = 0;
 
 	for(i = 0; i<5 ; i++){
 		for(j = 0; j<128 ; i++){
-			consumeBit(currentUser, j);
+			consumeBit(antenne, currentUser, j);
 			currentUser = (currentUser+1) % NB_USERS;
 		}
 	}

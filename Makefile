@@ -6,12 +6,14 @@ EXEC=simulation
 
 all: simulation
 
-simulation: main.o struct.o RR.o initialisation.o distribution.o
-	gcc -o simulation main.o RR.o initialisation.o distribution.o
+simulation: main.o struct.o RR.o maxSNR.o initialisation.o distribution.o
+	gcc -o simulation main.o RR.o maxSNR.o initialisation.o distribution.o
 struct.o: struct.h
 	gcc -c struct.h
 RR.o: RR.h RR.c distribution.h initialisation.h
 	gcc -c RR.c
+maxSNR.o: maxSNR.h maxSNR.c distribution.h initialisation.h
+	gcc -c maxSNR.c
 initialisation.o: initialisation.c initialisation.h  
 	gcc -c initialisation.c
 distribution.o: distribution.h distribution.c initialisation.h

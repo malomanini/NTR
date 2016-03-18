@@ -4,6 +4,6 @@
 #include "struct.h"
 
 
-int maxSNR();
+int maxSNR(Antenne *antenne);
 
 #endif

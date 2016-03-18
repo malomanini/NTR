@@ -16,16 +16,16 @@ typedef struct Buffer Buffer;
 struct Buffer
 {
 	Packet thePacket;
-	Buffer* nextBuffer;
+	Buffer *nextBuffer;
 };
 
 typedef struct User User;
 struct User
 {
-
 	int bufferVide;
 	int debitMoyen;
 	int debitsActuels[128];
+	int sommeDelai;
 	Buffer firstBuffer;
 	Buffer lastBuffer;
 };

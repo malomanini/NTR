@@ -18,6 +18,7 @@ void initUser(User *user, Buffer bufferchain){
 	int i = 0 ;
 	user->bufferVide=0;
 	user->debitMoyen=0;
+	user->sommeDelai=0;
 	for(i = 0; i<128; i++)
 	{
 		user->debitsActuels[i]=0;
@@ -52,14 +53,14 @@ void initMatriceDebits(Antenne *antenne){
 	}
 }
 
-void consumeBit(int currentUser, int subCarrier){
+void consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 	/*NearUser*/
 
 	if(currentUser<(NB_USERS/2)){
-		antenne->usersNear[currentUser].firstBuffer.bitsRestants = antenne->usersNear[currentUser].firstBuffer.bitsRestants - antenne->usersNear[currentUser].debitsActuels[subCarrier];
-		if(antenne->usersNear[currentUser].firstBuffer.bitsRestants <= 0){
-			antenne->usersNear[currentUser].firstBuffer = antenne->usersNear[currentUser].firstBuffer.nextBuffer;
-			if(antenne->usersNear[currentUser].firstBuffer == NULL){
+		antenne->usersNear[currentUser].firstBuffer.thePacket.bitsRestants = antenne->usersNear[currentUser].firstBuffer.thePacket.bitsRestants - antenne->usersNear[currentUser].debitsActuels[subCarrier];
+		if(antenne->usersNear[currentUser].firstBuffer.thePacket.bitsRestants <= 0){
+			antenne->usersNear[currentUser].firstBuffer = *antenne->usersNear[currentUser].firstBuffer.nextBuffer;
+			if((antenne->usersNear[currentUser].firstBuffer.nextBuffer == NULL) && (antenne->usersNear[currentUser].firstBuffer.thePacket.bitsRestants<1)){
 				antenne->usersNear[currentUser].bufferVide = 1;
 			}
 		}
@@ -68,10 +69,10 @@ void consumeBit(int currentUser, int subCarrier){
 	else{
 		currentUser = currentUser-5;
 
-		antenne->usersFar[currentUser].firstBuffer.bitsRestants = antenne->usersFar[currentUser].firstBuffer.bitsRestants - antenne->usersFar[currentUser].debitsActuels[subCarrier];
-		if(antenne->usersFar[currentUser].firstBuffer.bitsRestants <= 0){
-			antenne->usersFar[currentUser].firstBuffer = antenne->usersFar[currentUser].firstBuffer.nextBuffer;
-			if(antenne->usersFar[currentUser].firstBuffer == NULL){
+		antenne->usersFar[currentUser].firstBuffer.thePacket.bitsRestants = antenne->usersFar[currentUser].firstBuffer.thePacket.bitsRestants - antenne->usersFar[currentUser].debitsActuels[subCarrier];
+		if(antenne->usersFar[currentUser].firstBuffer.thePacket.bitsRestants <= 0){
+			antenne->usersFar[currentUser].firstBuffer = *antenne->usersFar[currentUser].firstBuffer.nextBuffer;
+			if((antenne->usersFar[currentUser].firstBuffer.nextBuffer == NULL) && (antenne->usersFar[currentUser].firstBuffer.thePacket.bitsRestants <1)){
 				antenne->usersFar[currentUser].bufferVide = 1;
 			}
 		}
@@ -82,16 +83,17 @@ void consumeBit(int currentUser, int subCarrier){
 int MaxUser (Antenne *antenne, int j){
 	User maxU;
 	int far = 0;
+	int i = 0;
 
-	for (int i = 0; i < NB_USERS/2 ; i++){ //parcourt les users
+	for (i = 0; i < NB_USERS/2 ; i++){ //parcourt les users
 		//on regarde les Nears. (ils sont separes)
-		if(antenne->usersNear[i].debitActuels[j] > maxU.debitActuels[j] && !antenne->usersNear[i].bufferVide){
+		if(antenne->usersNear[i].debitsActuels[j] > maxU.debitsActuels[j] && !antenne->usersNear[i].bufferVide){
 			//si l'User a un meilleur debit, et que son buffer n'est pas vide: il devient le MaxUser
 			maxU = antenne->usersNear[i];
 			far = 0;
 			}
 		//on regarde les far aussi
-		if(antenne->usersFar[i].debitActuels[j] > maxU.debitActuels[j]  && !antenne->usersFar[i].bufferVide){
+		if(antenne->usersFar[i].debitsActuels[j] > maxU.debitsActuels[j]  && !antenne->usersFar[i].bufferVide){
 			//si l'User a un meilleur debit, et que son buffer n'est pas vide: il devient le MaxUser
 			maxU = antenne->usersFar[i];
 			far = 1; 
@@ -106,7 +108,7 @@ int MaxUser (Antenne *antenne, int j){
 	}
 };
 
-int empty(int currentUser){
+int empty(Antenne *antenne, int currentUser){
 	if(currentUser < (NB_USERS/2)){
 		return antenne->usersNear[currentUser].bufferVide;
 	}
