@@ -55,17 +55,26 @@ void initMatriceDebits(Antenne *antenne){
 void consumeBit(int currentUser, int subCarrier){
 	/*NearUser*/
 
-	if(usersNear[currentUser]<(NB_USERS/2)){
+	if(currentUser<(NB_USERS/2)){
 		usersNear[currentUser].firstBuffer.bitsRestants = usersNear[currentUser].firstBuffer.bitsRestants - usersNear[currentUser].debitsActuels[subCarrier];
 		if(usersNear[currentUser].firstBuffer.bitsRestants <= 0){
-			usersNear[currentUser]->firstBuffer = usersNear[currentUser]->firstBuffer->nextBuffer;
-			if(usersNear[currentUser]->firstBuffer == NULL){
-				usersNear[currentUser]->bufferVide = 1;
+			usersNear[currentUser].firstBuffer = usersNear[currentUser].firstBuffer.nextBuffer;
+			if(usersNear[currentUser].firstBuffer == NULL){
+				usersNear[currentUser].bufferVide = 1;
 			}
 		}
 	}
 	//User far
 	else{
+		currentUser = currentUser-5;
+
+		usersFar[currentUser].firstBuffer.bitsRestants = usersFar[currentUser].firstBuffer.bitsRestants - usersFar[currentUser].debitsActuels[subCarrier];
+		if(usersFar[currentUser].firstBuffer.bitsRestants <= 0){
+			usersFar[currentUser].firstBuffer = usersFar[currentUser].firstBuffer.nextBuffer;
+			if(usersFar[currentUser].firstBuffer == NULL){
+				usersFar[currentUser].bufferVide = 1;
+			}
+		}
 
 	}
 }
