@@ -30,7 +30,7 @@ void initUser(User *user, Buffer bufferchain){
 void initAntenne(Antenne *antenne){
 	int i = 0;
 
-	for(i = 0; i<NB_USERS/2; i++)
+	for(i = 0; i<NB_USERS; i++)
 	{
 		antenne->users[i].firstBuffer.nextBuffer = NULL;
 		antenne->users[i].lastBuffer.nextBuffer = NULL;
@@ -63,10 +63,8 @@ void produceBit(Antenne *antenne){
 
 
 void consumeBit(Antenne *antenne, int currentUser, int subCarrier){
-	/*NearUser*/
 
-	//User near
-	if(currentUser<(NB_USERS/2)){
+	if(currentUser<(NB_USERS)){
 		antenne->users[currentUser].firstBuffer.thePacket.bitsRestants = antenne->users[currentUser].firstBuffer.thePacket.bitsRestants - antenne->users[currentUser].debitsActuels[subCarrier];
 		if(antenne->users[currentUser].firstBuffer.thePacket.bitsRestants <= 0){
 			antenne->users[currentUser].firstBuffer = *antenne->users[currentUser].firstBuffer.nextBuffer;
@@ -74,19 +72,6 @@ void consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 				antenne->users[currentUser].bufferVide = 1;
 			}
 		}
-	}
-	//User far
-	else{
-		currentUser = currentUser-5;
-
-		antenne->users[currentUser].firstBuffer.thePacket.bitsRestants = antenne->users[currentUser].firstBuffer.thePacket.bitsRestants - antenne->users[currentUser].debitsActuels[subCarrier];
-		if(antenne->users[currentUser].firstBuffer.thePacket.bitsRestants <= 0){
-			antenne->users[currentUser].firstBuffer = *antenne->users[currentUser].firstBuffer.nextBuffer;
-			if((antenne->users[currentUser].firstBuffer.nextBuffer == NULL) && (antenne->users[currentUser].firstBuffer.thePacket.bitsRestants <1)){
-				antenne->users[currentUser].bufferVide = 1;
-			}
-		}
-
 	}
 }
 

@@ -14,7 +14,14 @@ int main(int argc, char *argv[]){
 	int nb_tours = 1000;
 	int i, x, y;
 
-	Antenne* monAntenne;
+	
+	Packet thePacket;
+	Buffer bufferinit;
+	Buffer nextBuffer;
+	Buffer bufferchain;
+	User users;
+	Antenne monAntenne;
+
 	int trameToSend[128][5];
 
 	/*---INITIALISATIONS---*/
@@ -22,8 +29,17 @@ int main(int argc, char *argv[]){
 	printf("Nombre de tours pour la simulation: ");
 	scanf("%d", &nb_tours);
 
-	initAntenne(monAntenne);
 	
+	initPacket(&thePacket);
+	initBuffer(&bufferinit, &nextBuffer, thePacket);
+	initUser(&users, bufferchain);
+	initAntenne(&monAntenne);
+	printf("initMatriceDebits s'execute pas\n");
+	/*initMatriceDebits(&monAntenne);*/
+	printf("consumeBit s'execute pas\n");
+	/*consumeBit(&monAntenne, 1, 1);*/
+	MaxUser (&monAntenne, 1);
+	empty(&monAntenne, 1);
 
 	/*---BOUCLE PRINCIPALE---*/
 	for(i = 0; i < nb_tours; i++){
@@ -50,7 +66,7 @@ int main(int argc, char *argv[]){
 		actualTime += 2;
 
 	}
-	printf("FIN du programme");
+	printf("FIN du programme\n");
 	return 0;
 }
 
