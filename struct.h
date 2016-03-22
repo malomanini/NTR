@@ -8,6 +8,7 @@
 typedef struct Packet Packet;
 struct Packet
 {
+	int valeur[100];
 	int dateCreation;
 	int bitsRestants;
 };
