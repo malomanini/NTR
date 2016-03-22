@@ -23,6 +23,7 @@ struct Buffer
 typedef struct User User;
 struct User
 {
+	int distance;
 	int bufferVide;
 	int debitMoyen;
 	int debitsActuels[128];
@@ -34,8 +35,7 @@ struct User
 typedef struct Antenne Antenne;
 struct Antenne
 {
-	User usersNear[NB_USERS/2];
-	User usersFar[NB_USERS/2];
+	User usersNear[NB_USERS];
 };
 
 #endif
