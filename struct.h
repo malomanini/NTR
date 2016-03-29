@@ -17,7 +17,7 @@ typedef struct Buffer Buffer;
 struct Buffer
 {
 	Packet thePacket;
-	Packet *nextBuffer;
+	Packet *nextPacket;
 };
 
 typedef struct User User;
