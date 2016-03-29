@@ -7,14 +7,15 @@
 void initPacket(Packet *packet){
 	packet->dateCreation=0;
 	packet->bitsRestants=0;
+	packet->valeur=0;
 }
 
-void initBuffer(Buffer *bufferinit, Buffer *nextBuffer, Packet thePacket){
+void initBuffer(Buffer *bufferinit, Packet *nextPacket, Packet thePacket){
 	bufferinit->thePacket=thePacket;
-	bufferinit->nextBuffer=nextBuffer;
+	bufferinit->nextPacket=nextPacket;
 }
 
-void initUser(User *user, Buffer bufferchain){
+void initUser(User *user, Packet thePacket){
 	int i = 0 ;
 	user->distance=5;
 	user->bufferVide=0;
@@ -24,7 +25,7 @@ void initUser(User *user, Buffer bufferchain){
 	{
 		user->debitsActuels[i]=0;
 	}
-	user->firstBuffer=bufferchain;
+	user->leBuffer.thePacket=thePacket;
 }
 
 void initAntenne(Antenne *antenne){
@@ -32,9 +33,8 @@ void initAntenne(Antenne *antenne){
 
 	for(i = 0; i<NB_USERS; i++)
 	{
-		antenne->users[i].firstBuffer.nextBuffer = NULL;
-		antenne->users[i].lastBuffer.nextBuffer = NULL;
-		antenne->users[i].bufferVide = 1;
+		initPacket(&antenne->users[i].leBuffer.thePacket);
+		initPacket(&antenne->users[i].leBuffer.nextPacket);
 	}
 }
 
@@ -62,10 +62,10 @@ void produceBit(Antenne *antenne){
 void consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 
 	if(currentUser<(NB_USERS)){
-		antenne->users[currentUser].firstBuffer.thePacket.bitsRestants = antenne->users[currentUser].firstBuffer.thePacket.bitsRestants - antenne->users[currentUser].debitsActuels[subCarrier];
-		if(antenne->users[currentUser].firstBuffer.thePacket.bitsRestants <= 0){
-			antenne->users[currentUser].firstBuffer = *antenne->users[currentUser].firstBuffer.nextBuffer;
-			if((antenne->users[currentUser].firstBuffer.nextBuffer == NULL) && (antenne->users[currentUser].firstBuffer.thePacket.bitsRestants<1)){
+		antenne->users[currentUser].leBuffer.thePacket.bitsRestants = antenne->users[currentUser].leBuffer.thePacket.bitsRestants - antenne->users[currentUser].debitsActuels[subCarrier];
+		if(antenne->users[currentUser].leBuffer.thePacket.bitsRestants <= 0){
+			antenne->users[currentUser].leBuffer.thePacket = *antenne->users[currentUser].leBuffer.nextPacket;
+			if((antenne->users[currentUser].leBuffer.nextPacket == NULL) && (antenne->users[currentUser].leBuffer.thePacket.bitsRestants<1)){
 				antenne->users[currentUser].bufferVide = 1;
 			}
 		}
