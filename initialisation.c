@@ -17,6 +17,7 @@ void initBuffer(Buffer *bufferinit, Packet *nextPacket, Packet thePacket){
 
 void initUser(User *user, Packet thePacket){
 	int i = 0 ;
+	
 	user->distance=5;
 	user->bufferVide=0;
 	user->debitMoyen=0;
@@ -59,7 +60,7 @@ void produceBit(Antenne *antenne){
 }
 
 
-void consumeBit(Antenne *antenne, int currentUser, int subCarrier){
+int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 
 	if(currentUser<(NB_USERS)){
 		antenne->users[currentUser].leBuffer.thePacket.bitsRestants = antenne->users[currentUser].leBuffer.thePacket.bitsRestants - antenne->users[currentUser].debitsActuels[subCarrier];
@@ -70,6 +71,7 @@ void consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 			}
 		}
 	}
+	return antenne->users[currentUser].debitsActuels[subCarrier];
 }
 
 int MaxUser (Antenne *antenne, int j){

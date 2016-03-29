@@ -11,6 +11,8 @@ void initAntenne(Antenne *antenne);
 void initMatriceDebits(Antenne *antenne);
 
 void createPackets(Antenne *antenne);
+void produceBit(Antenne *antenne);
+int consumeBit(Antenne *antenne, int currentUser, int subCarrier);
 
 #endif /* INITIALISATION_H*/
 

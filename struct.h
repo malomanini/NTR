@@ -37,8 +37,5 @@ struct Antenne
 	User users[NB_USERS];
 };
 
-
-
-
 #endif
 

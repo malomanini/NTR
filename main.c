@@ -33,7 +33,7 @@ int main(int argc, char *argv[]){
 		initMatriceDebits(&monAntenne);
 
 		/*Application de l'algorithme et ôtage des bits envoyés*/
-		debitTotal +=RR(&monAntenne);
+		debitTotal += RR(&monAntenne);
 
 		/*ENVOI DE LA TRAME */
 
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
 	}
 	
 	printf("\nStatistiques : \n\n");
-	printf("Débit total de la simulation: %d bits/ms\n", debitTotal/actualTime);
+	printf("Débit total de la simulation: %d bits/ms\n", (int)(debitTotal/actualTime));
 
 
 	return 0;
