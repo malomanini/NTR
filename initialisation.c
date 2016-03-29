@@ -42,7 +42,7 @@ void initMatriceDebits(Antenne *antenne){
 	int i = 0;
 	int j = 0;
 
-	for(i = 0; i<NB_USERS/2; i++)
+	for(i = 0; i<NB_USERS; i++)
 	{
 		for(j = 0; j<128; i++){
 			antenne->users[i].debitsActuels[j] = getSNR(3);
@@ -53,11 +53,8 @@ void initMatriceDebits(Antenne *antenne){
 void produceBit(Antenne *antenne){
 	int i = 0;
 
-	for(i = 0; i < (NB_USERS/2); i++){
+	for(i = 0; i < (NB_USERS); i++){
 
-	}
-	for(i = 0; i < (NB_USERS/2); i++){
-		
 	}
 }
 
@@ -77,37 +74,22 @@ void consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 
 int MaxUser (Antenne *antenne, int j){
 	User maxU;
-	int far = 0;
 	int i = 0;
+	int res;
 
-	for (i = 0; i < NB_USERS/2 ; i++){ //parcourt les users
-		//on regarde les Nears. (ils sont separes)
+	for (i = 0; i < NB_USERS ; i++){ //parcourt les users
 		if(antenne->users[i].debitsActuels[j] > maxU.debitsActuels[j] && !antenne->users[i].bufferVide){
 			//si l'User a un meilleur debit, et que son buffer n'est pas vide: il devient le MaxUser
 			maxU = antenne->users[i];
-			far = 0;
+			res = i;
 			}
-		//on regarde les far aussi
-		if(antenne->users[i].debitsActuels[j] > maxU.debitsActuels[j]  && !antenne->users[i].bufferVide){
-			//si l'User a un meilleur debit, et que son buffer n'est pas vide: il devient le MaxUser
-			maxU = antenne->users[i];
-			far = 1; 
-			}
-		}
 	
-	if(far){
-		return (i+5);
-	}
-	else{
-		return i;
-	}
-};
+	return res;
+}
+}
 
 int empty(Antenne *antenne, int currentUser){
-	if(currentUser < (NB_USERS/2)){
+	if(currentUser < NB_USERS){
 		return antenne->users[currentUser].bufferVide;
-	}
-	else{
-		return antenne->users[currentUser - 5].bufferVide;
 	}
 }

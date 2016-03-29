@@ -32,21 +32,16 @@ double gaussrand()
 	return X;
 }
 
-int getSNR(int distance);
+int getSNR(int distance){
 	int r = 0;
-	int temp = 0;
-
-	temp = ((gaussrand()*2)+distance);
+	double temp = ((gaussrand()*2)+ distance );
 	r = (int)temp;
 	if(r%2){
 		r++;
 	}
 	if(r > 10 || r < 0){
-		return getValeur();
+		return getSNR(distance);
 	}
 
 	return r;
 }
-
-
-

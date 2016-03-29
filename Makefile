@@ -1,13 +1,13 @@
 
 CC=gcc
-CFLAGS=-W -Wall -ansi -pedantic
+CFLAGS=-W -Wall -ansi -pedantic -lm 
 LDFLAGS=
 EXEC=simulation
 
 all: simulation
 
 simulation: main.o struct.o RR.o maxSNR.o initialisation.o distribution.o
-	gcc -o simulation main.o RR.o maxSNR.o initialisation.o distribution.o
+	gcc -o simulation main.o RR.o maxSNR.o initialisation.o distribution.o $(CFLAGS)
 struct.o: struct.h
 	gcc -c struct.h
 RR.o: RR.h RR.c distribution.h initialisation.h
