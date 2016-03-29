@@ -34,7 +34,7 @@ struct User
 typedef struct Antenne Antenne;
 struct Antenne
 {
-	User usersNear[NB_USERS];
+	User users[NB_USERS];
 };
 
 #endif
