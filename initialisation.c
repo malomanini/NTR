@@ -7,7 +7,6 @@
 void initPacket(Packet packet){
 	packet.dateCreation=0;
 	packet.bitsRestants=0;
-	packet.valeur=0;
 }
 
 void initBuffer(Buffer buffer){
@@ -47,16 +46,25 @@ void initMatriceDebits(Antenne *antenne){
 
 	for(i = 0; i<NB_USERS; i++)
 	{
-		for(j = 0; j<128; i++){
+		for(j = 0; j<128; j++){
 			antenne->users[i].SNRActuels[j] = getSNR(3);
 		}
 	}
 }
 
-void produceBit(Antenne *antenne){
+/*!!! Ameleioration possible en ajoutant un LastPacket */
+void produceBit(Antenne *antenne, int actualTime){
 	int i = 0;
+	int random = 250;
+	Packet *monPetitPaquet;
+	initPacket(*monPetitPaquet);
 
 	for(i = 0; i < (NB_USERS); i++){
+		*monPetitPaquet = antenne->users[i].leBuffer.thePacket;
+		//On parcours la chaine jusqu'a la fin
+		while(monPetitPaquet->bitsRestants == 100){
+			monPetitPaquet = antenne->users[i].leBuffer.nextPacket;		
+		}
 
 	}
 }
@@ -67,7 +75,7 @@ int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 	if(currentUser<(NB_USERS)){
 		antenne->users[currentUser].leBuffer.thePacket.bitsRestants = antenne->users[currentUser].leBuffer.thePacket.bitsRestants - antenne->users[currentUser].SNRActuels[subCarrier];
 		if(antenne->users[currentUser].leBuffer.thePacket.bitsRestants <= 0){
-			antenne->users[currentUser].leBuffer.thePacket = *antenne->users[currentUser].leBuffer.nextPacket;
+			antenne->users[currentUser].leBuffer.thePacket = *(antenne->users[currentUser].leBuffer.nextPacket);
 			if((antenne->users[currentUser].leBuffer.nextPacket == NULL) && (antenne->users[currentUser].leBuffer.thePacket.bitsRestants<1)){
 				antenne->users[currentUser].bufferVide = 1;
 			}
@@ -81,9 +89,9 @@ int MaxUser (Antenne *antenne, int j){
 	int i = 0;
 	int res;
 
-	for (i = 0; i < NB_USERS ; i++){ //parcourt les users
+	for (i = 0; i < NB_USERS ; i++){ /* parcourt les users */
 		if(antenne->users[i].SNRActuels[j] > maxU.SNRActuels[j] && !antenne->users[i].bufferVide){
-			//si l'User a un meilleur debit, et que son buffer n'est pas vide: il devient le MaxUser
+			/* si l'User a un meilleur debit, et que son buffer n'est pas vide: il devient le MaxUser */
 			maxU = antenne->users[i];
 			res = i;
 			}

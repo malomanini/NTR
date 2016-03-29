@@ -3,6 +3,5 @@
 
 #include "struct.h"
 
-
 int RR(Antenne *antenne);
 #endif

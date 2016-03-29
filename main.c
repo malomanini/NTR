@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
 	for(i = 0; i < nb_tours; i++){
 
 		/*Initialisation des paquets utilisateurs*/
-		produceBit(&monAntenne);
+		produceBit(&monAntenne, actualTime);
 
 		/*Initilisations des débits des utilisateurs*/
 		initMatriceDebits(&monAntenne);
