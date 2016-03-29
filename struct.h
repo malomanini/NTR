@@ -1,6 +1,7 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
+#define NB_SUBCARRIERS 128
 #define NB_USERS 10
 #define BUFFERS_PER_USER 10
 #define PACKETS_CREATION_RATIO 50
@@ -25,8 +26,8 @@ struct User
 {
 	int distance;
 	int bufferVide;
-	int debitMoyen;
-	int debitsActuels[128];
+	int SNRmoyen;
+	int SNRActuels[NB_SUBCARRIERS];
 	int sommeDelai;
 	Buffer leBuffer;
 };
