@@ -4,5 +4,5 @@
 #include "struct.h"
 
 
-void RR (Antenne *antenne);
+int RR(Antenne *antenne);
 #endif
