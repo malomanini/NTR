@@ -13,14 +13,6 @@ struct Packet
 	int dateCreation;
 	/*Nombre de bits dans le paquet (MAX = 100) */
 	int bitsRestants;
-};
-
-typedef struct Buffer Buffer;
-struct Buffer
-{
-	/*Paquet destiné à etre consommé prochainement */
-	Packet thePacket;
-	/*Suite de la liste */
 	Packet *nextPacket;
 };
 
