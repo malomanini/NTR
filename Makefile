@@ -7,7 +7,7 @@ EXEC=simulation
 all: simulation
 
 simulation: main.o struct.o RR.o maxSNR.o initialisation.o distribution.o
-	gcc -o simulation main.o RR.o maxSNR.o initialisation.o distribution.o $(CFLAGS)
+	gcc -o simulation main.o RR.o maxSNR.o initialisation.o distribution.o $(CFLAGS) && rm -rf *.o
 struct.o: struct.h
 	gcc -c struct.h
 RR.o: RR.h RR.c distribution.h initialisation.h
