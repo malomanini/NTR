@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
 
 		/*Initialisation des paquets utilisateurs*/
 		produceBit(&monAntenne, actualTime);
-
+		
 		/*Initilisations des débits des utilisateurs*/
 		initMatriceDebits(&monAntenne);
 

@@ -4,8 +4,7 @@
 #ifndef INITIALISATION_H
 #define INITIALISATION_H
 
-void initPacket(Packet packet);
-void initBuffer(Buffer buffer);
+Packet* createPacket();
 void initUser(User user);
 void initAntenne(Antenne *antenne);
 void initMatriceDebits(Antenne *antenne);

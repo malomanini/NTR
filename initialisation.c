@@ -4,14 +4,12 @@
 #include "initialisation.h"
 #include "struct.h"
 
-void initPacket(Packet packet){
-	packet.dateCreation=0;
-	packet.bitsRestants=0;
-}
-
-void initBuffer(Buffer buffer){
-	initPacket(buffer.thePacket);
-	buffer.nextPacket = NULL;
+Packet* createPacket(){
+	Packet *packet = malloc(sizeof(Packet));
+	packet->dateCreation=0;
+	packet->bitsRestants=0;
+	packet->nextPacket = NULL;
+	return packet;
 }
 
 void initUser(User user){
@@ -25,7 +23,7 @@ void initUser(User user){
 	{
 		user.SNRActuels[i]=0;
 	}
-	initBuffer(user.leBuffer);
+	createPacket(user.lePaquet);
 
 }
 
@@ -52,37 +50,68 @@ void initMatriceDebits(Antenne *antenne){
 	}
 }
 
-/*!!! Ameleioration possible en ajoutant un LastPacket */
+/*!!! Amélioration possible en ajoutant un LastPacket */
 void produceBit(Antenne *antenne, int actualTime){
 	int i = 0;
 	int random = 250;
-	Packet *monPetitPaquet;
-	initPacket(*monPetitPaquet);
+	int debordement = 0;
+	int resteARemplir = 0;
 
+	
+	/* Création d'un nouveau packet */
+	Packet *packet = createPacket();
+
+	
 	for(i = 0; i < (NB_USERS); i++){
-		*monPetitPaquet = antenne->users[i].leBuffer.thePacket;
-		//On parcours la chaine jusqu'a la fin
-		while(monPetitPaquet->bitsRestants == 100){
-			monPetitPaquet = antenne->users[i].leBuffer.nextPacket;		
+		*packet = antenne->users[i].lePaquet;
+		/* Recherche de la fin de la chaine */
+		while(packet->bitsRestants == 100){
+			packet = antenne->users[i].lePaquet.nextPacket;		
 		}
 
+		/* Remplissage du paquet */
+		resteARemplir = random;		
+		while(resteARemplir > 0){
+			debordement = resteARemplir - (100 - packet->bitsRestants);
+			packet->bitsRestants = 100;
+			resteARemplir -= debordement;
+
+		}
+
+		
 	}
 }
 
 
 int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 
+	int debordement;
+
 	if(currentUser<(NB_USERS)){
-		antenne->users[currentUser].leBuffer.thePacket.bitsRestants = antenne->users[currentUser].leBuffer.thePacket.bitsRestants - antenne->users[currentUser].SNRActuels[subCarrier];
-		if(antenne->users[currentUser].leBuffer.thePacket.bitsRestants <= 0){
-			antenne->users[currentUser].leBuffer.thePacket = *(antenne->users[currentUser].leBuffer.nextPacket);
-			if((antenne->users[currentUser].leBuffer.nextPacket == NULL) && (antenne->users[currentUser].leBuffer.thePacket.bitsRestants<1)){
+		debordement = antenne->users[currentUser].lePaquet.bitsRestants - antenne->users[currentUser].SNRActuels[subCarrier];
+
+		/* Mise à jour du nombre de bits restants dans le paquet / Consommation des bits */
+		antenne->users[currentUser].lePaquet.bitsRestants = debordement;
+
+		/* Mise à jour du buffer si le paquet actuel est vide*/
+		if(antenne->users[currentUser].lePaquet.bitsRestants <= 0){
+
+			antenne->users[currentUser].lePaquet = *(antenne->users[currentUser].lePaquet.nextPacket);
+
+			antenne->users[currentUser].lePaquet.bitsRestants = 100 + debordement;
+			
+			/* Mise à jour du champ */
+			if((antenne->users[currentUser].lePaquet.nextPacket == NULL) && (antenne->users[currentUser].lePaquet.bitsRestants<1)){
 				antenne->users[currentUser].bufferVide = 1;
 			}
 		}
 	}
+
+	/* On retourne le nombre de bits ôtés */
 	return antenne->users[currentUser].SNRActuels[subCarrier];
 }
+
+
 
 int MaxUser (Antenne *antenne, int j){
 	User maxU;
