@@ -9,6 +9,7 @@ Packet* createPacket(){
 	packet->dateCreation=0;
 	packet->bitsRestants=0;
 	packet->nextPacket = NULL;
+
 	return packet;
 }
 
@@ -23,7 +24,8 @@ void initUser(User user){
 	{
 		user.SNRActuels[i]=0;
 	}
-	createPacket(user.lePaquet);
+
+	user.lePaquet = createPacket();
 
 }
 
@@ -57,17 +59,25 @@ void produceBit(Antenne *antenne, int actualTime){
 	int debordement = 0;
 	int resteARemplir = 0;
 
-	
+
 	/* Création d'un nouveau packet */
-	Packet *packet = createPacket();
+	Packet *packet;
 
 	
 	for(i = 0; i < (NB_USERS); i++){
-		*packet = antenne->users[i].lePaquet;
+
+		printf("njc\n");
+		printf("Ta race: %d",antenne->users[i].distance );
+
+		packet = antenne->users[i].lePaquet;
+
 		/* Recherche de la fin de la chaine */
-		while(packet->bitsRestants == 100){
-			packet = antenne->users[i].lePaquet.nextPacket;		
+		while(antenne->users[i].lePaquet->bitsRestants == 100){
+					printf("EASY\n");
+			packet = antenne->users[i].lePaquet->nextPacket;	
+					printf("EASY\n");	
 		}
+							
 
 		/* Remplissage du paquet */
 		resteARemplir = random;		
@@ -77,9 +87,10 @@ void produceBit(Antenne *antenne, int actualTime){
 			resteARemplir -= debordement;
 
 		}
-
-		
+		printf("EASY after\n");	
+			
 	}
+
 }
 
 
@@ -88,25 +99,34 @@ int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 	int debordement;
 
 	if(currentUser<(NB_USERS)){
-		debordement = antenne->users[currentUser].lePaquet.bitsRestants - antenne->users[currentUser].SNRActuels[subCarrier];
+		printf("ent1\n");
+		debordement = antenne->users[currentUser].lePaquet->bitsRestants - antenne->users[currentUser].SNRActuels[subCarrier];
 
 		/* Mise à jour du nombre de bits restants dans le paquet / Consommation des bits */
-		antenne->users[currentUser].lePaquet.bitsRestants = debordement;
+		antenne->users[currentUser].lePaquet->bitsRestants = debordement;
 
-		/* Mise à jour du buffer si le paquet actuel est vide*/
-		if(antenne->users[currentUser].lePaquet.bitsRestants <= 0){
+		if(antenne->users[currentUser].lePaquet->bitsRestants <= 0){
+			printf("ent2\n");
 
-			antenne->users[currentUser].lePaquet = *(antenne->users[currentUser].lePaquet.nextPacket);
-
-			antenne->users[currentUser].lePaquet.bitsRestants = 100 + debordement;
-			
-			/* Mise à jour du champ */
-			if((antenne->users[currentUser].lePaquet.nextPacket == NULL) && (antenne->users[currentUser].lePaquet.bitsRestants<1)){
-				antenne->users[currentUser].bufferVide = 1;
+			/* Si ce n'est pas le dernier paquet, on décale les paquets et on continue de consommer */
+			if(antenne->users[currentUser].lePaquet -> nextPacket != NULL){
+				printf("ent3\n");
+				antenne->users[currentUser].lePaquet = antenne->users[currentUser].lePaquet->nextPacket;
+				printf("sortie3\n");
+				antenne->users[currentUser].lePaquet->bitsRestants = 100 + debordement;
+				printf("sortie3\n");
 			}
+			/* Sinon on marque le buffer comme vide */
+			else{
+				printf("ent4\n");
+				antenne->users[currentUser].bufferVide = 1;
+				printf("sortie4\n");
+			}
+			printf("sortie2\n");
 		}
+		printf("sortie1\n");
 	}
-
+				
 	/* On retourne le nombre de bits ôtés */
 	return antenne->users[currentUser].SNRActuels[subCarrier];
 }

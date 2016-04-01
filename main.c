@@ -11,15 +11,15 @@ int main(int argc, char *argv[]){
 
 	long actualTime = 0;
 	int debitTotal;
-	int nb_tours = 1000;
+	int nb_tours = 10;
 	int i, x, y;
 
 	Antenne monAntenne;
 
 	/*---INITIALISATIONS---*/
 	printf("\nSIMULATION NTR\n");
-	printf("Nombre de tours pour la simulation: ");
-	scanf("%d", &nb_tours);
+	/*printf("Nombre de tours pour la simulation: ");
+	scanf("%d", &nb_tours);*/
 
 	initAntenne(&monAntenne);
 
@@ -28,10 +28,10 @@ int main(int argc, char *argv[]){
 
 		/*Initialisation des paquets utilisateurs*/
 		produceBit(&monAntenne, actualTime);
-		
+
 		/*Initilisations des débits des utilisateurs*/
 		initMatriceDebits(&monAntenne);
-
+					
 		/*Application de l'algorithme et ôtage des bits envoyés*/
 		debitTotal += RR(&monAntenne);
 

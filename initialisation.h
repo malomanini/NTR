@@ -13,5 +13,6 @@ void createPackets(Antenne *antenne);
 void produceBit(Antenne *antenne, int actualTime);
 int consumeBit(Antenne *antenne, int currentUser, int subCarrier);
 
+
 #endif 
 
