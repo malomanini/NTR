@@ -30,7 +30,7 @@ struct User
 typedef struct Antenne Antenne;
 struct Antenne
 {
-	User users[NB_USERS];
+	User *users[NB_USERS];
 };
 
 #endif

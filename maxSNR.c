@@ -17,7 +17,7 @@ void MaxSNR(Antenne *antenne) {
 			if(empty(antenne, MaxU)){
 				MaxU = MaxUser();
 			}
-			consumeBit(antenne, MaxUser, j);
+			/*consumeBit(antenne, MaxUser, j);*/
 		}
 
 	}
