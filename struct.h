@@ -24,7 +24,7 @@ struct User
 	int SNRmoyen;
 	int SNRActuels[NB_SUBCARRIERS];
 	int sommeDelai;
-	Packet lePaquet;
+	Packet *lePaquet;
 };
 
 typedef struct Antenne Antenne;

@@ -5,11 +5,12 @@
 #include "struct.h"
 
 Packet* createPacket(){
+	
 	Packet *packet = malloc(sizeof(Packet));
 	packet->dateCreation=0;
 	packet->bitsRestants=0;
 	packet->nextPacket = NULL;
-
+	printf("createPacket\n");
 	return packet;
 }
 
@@ -26,7 +27,7 @@ void initUser(User user){
 	}
 
 	user.lePaquet = createPacket();
-
+	printf("initUser bitsresteant  %d\n",user.lePaquet->bitsRestants);
 }
 
 void initAntenne(Antenne *antenne){
@@ -36,6 +37,8 @@ void initAntenne(Antenne *antenne){
 	{
 		initUser(antenne->users[i]);
 	}
+	printf("initAntenne SNRmoyen %d\n",&(antenne.users[i].SNRmoyen));
+	printf("initAntenne bitsrestant %d\n",antenne.users[i].lePaquet->bitsRestants);
 }
 
 
@@ -63,22 +66,25 @@ void produceBit(Antenne *antenne, int actualTime){
 	/* Création d'un nouveau packet */
 	Packet *packet;
 
-	
+	printf("produceBit1\n");
 	for(i = 0; i < (NB_USERS); i++){
-
-		printf("njc\n");
-		printf("Ta race: %d",antenne->users[i].distance );
+		printf("produceBit2\n");
+		printf("produceBittest de i : %d \n",i );
+		printf("produceBittest de NB_USERS : %d \n",NB_USERS );
+		printf("produceBittest de SNRmoyen : %d \n",antenne->users[i].SNRmoyen );
+		printf("produceBittest de bitsRestants : %d \n",antenne->users[i].lePaquet->bitsRestants );
+		printf("produceBittest de distance : %d",antenne->users[i].distance );
 
 		packet = antenne->users[i].lePaquet;
-
+		printf("produceBit3\n");
 		/* Recherche de la fin de la chaine */
 		while(antenne->users[i].lePaquet->bitsRestants == 100){
-					printf("EASY\n");
+			printf("produceBit4\n");
 			packet = antenne->users[i].lePaquet->nextPacket;	
-					printf("EASY\n");	
+			printf("produceBit5\n");	
 		}
 							
-
+		printf("produceBit6\n");
 		/* Remplissage du paquet */
 		resteARemplir = random;		
 		while(resteARemplir > 0){

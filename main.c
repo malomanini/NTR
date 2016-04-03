@@ -7,12 +7,12 @@
 #include "initialisation.h"
 
 
-int main(int argc, char *argv[]){
+int main(){
 
 	long actualTime = 0;
 	int debitTotal;
 	int nb_tours = 10;
-	int i, x, y;
+	int i;
 
 	Antenne monAntenne;
 
@@ -20,21 +20,21 @@ int main(int argc, char *argv[]){
 	printf("\nSIMULATION NTR\n");
 	/*printf("Nombre de tours pour la simulation: ");
 	scanf("%d", &nb_tours);*/
-
+	printf("Main 1\n");
 	initAntenne(&monAntenne);
-
+	printf("Main 2\n");
 	/*---BOUCLE PRINCIPALE---*/
 	for(i = 0; i < nb_tours; i++){
-
+		printf("Main 3\n");
 		/*Initialisation des paquets utilisateurs*/
 		produceBit(&monAntenne, actualTime);
-
+		printf("Main 4\n");
 		/*Initilisations des débits des utilisateurs*/
 		initMatriceDebits(&monAntenne);
-					
+		printf("Main 5\n");			
 		/*Application de l'algorithme et ôtage des bits envoyés*/
 		debitTotal += RR(&monAntenne);
-
+		printf("Main 6\n");
 		/*ENVOI DE LA TRAME */
 
 		/*Mise à jours des délais*/
