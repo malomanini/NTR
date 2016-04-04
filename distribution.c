@@ -29,7 +29,7 @@ double gaussrand()
 
 	phase = 1 - phase;
 
-	return X;
+	return X; 
 }
 
 int getSNR(int distance){
@@ -42,6 +42,5 @@ int getSNR(int distance){
 	if(r > 10 || r < 0){
 		return getSNR(distance);
 	}
-
 	return r;
 }

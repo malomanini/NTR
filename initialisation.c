@@ -4,6 +4,8 @@
 #include "initialisation.h"
 #include "struct.h"
 
+int randDist = 0;
+
 Packet* createPacket(){
 	
 	Packet *packet = malloc(sizeof(Packet));
@@ -18,7 +20,12 @@ User* initUser(){
 	int i = 0 ;
 	User *user = malloc(sizeof(User));
 
-	user->distance=3;
+	if(randDist%2 == 0){
+		user->distance=3;
+	}
+	else{
+		user->distance=5;
+	}
 	user->bufferVide=0;
 	user->SNRmoyen=0;
 	user->sommeDelai=0;
@@ -29,6 +36,7 @@ User* initUser(){
 
 	user->lePaquet = createPacket();
 	printf("initUser bitsresteant  %d\n",user->lePaquet->bitsRestants);
+	randDist++;
 	return user;
 }
 
@@ -56,8 +64,7 @@ void initMatriceDebits(Antenne *antenne){
 	for(i = 0; i<NB_USERS; i++)
 	{
 		for(j = 0; j<128; j++){
-			antenne->users[i]->SNRActuels[j] = getSNR(3);
-			//printf("initMatriceDebits getSNR(3)=%d \n",antenne->users[i]->SNRActuels[j]);
+			antenne->users[i]->SNRActuels[j] = getSNR(antenne->users[i]->distance);
 		}
 	}
 }
@@ -99,7 +106,7 @@ void produceBit(Antenne *antenne, int actualTime){
 	printf("prod1\n");
 
 	for(i = 0; i < (NB_USERS); i++){
-		printf("prod2\n");
+		printf("prod2 user :%d\n", i);
 		packet = antenne->users[i]->lePaquet;
 		//recupere le dernier paquet
 		while(packet->nextPacket != NULL)
@@ -188,7 +195,7 @@ int MaxUser (Antenne *antenne, int subCarrier){
 			}
 	}
 
-	return 2;
+	return res;
 }
 
 int empty(Antenne *antenne, int currentUser){
