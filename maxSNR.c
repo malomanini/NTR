@@ -16,7 +16,9 @@ int maxSNR(Antenne *antenne) {
 		for(g = 0; g < 5 ; g++){// parcours les timeslots, //tant que User.BufferVide > 0 ou que g<5, on transmet au debit actuel a cet user
 			if(empty(antenne, MaxU)){
 				MaxU = MaxUser(antenne, j);
+				printf("MAXSNR choisit l'utilisateur %d\n", MaxU);
 			}
+
 			debitTotalTrame += consumeBit(antenne, MaxU, j);
 		}
 

@@ -39,7 +39,7 @@ int main(){
 		if(choixAlgo == 1){
 			debitTotal += RR(&monAntenne);
 		}
-		if(choixAlgo == 2){
+		else if(choixAlgo == 2){
 			debitTotal += maxSNR(&monAntenne);
 		}
 		else{
