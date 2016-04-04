@@ -18,7 +18,7 @@ User* initUser(){
 	int i = 0 ;
 	User *user = malloc(sizeof(User));
 
-	user->distance=5;
+	user->distance=3;
 	user->bufferVide=0;
 	user->SNRmoyen=0;
 	user->sommeDelai=0;
@@ -69,28 +69,22 @@ void produceBit(Antenne *antenne, int actualTime){
 	int random = 250;
 	int debordement = 0;
 	int resteARemplir = 0;
+	int temp = 0;
 
 
 	// Création d'un nouveau packet 
 	Packet *packet;
-
-	printf("produceBit1\n");
+	/*
 	for(i = 0; i < (NB_USERS); i++){
-		printf("produceBit2\n");
-		printf("produceBittest i= %d de SNRmoyen : %d \n",i,antenne->users[i]->SNRmoyen );
 		printf("produceBittest i= %d de bitsRestants : %d \n",i,antenne->users[i]->lePaquet->bitsRestants );
-		printf("produceBittest i= %d de distance : %d",i,antenne->users[i]->distance );
-
 		packet = antenne->users[i]->lePaquet;
-		printf("produceBit3\n");
 		// Recherche de la fin de la chaine (sa boucle a l'infinit je crois faut voir pourquoi)
 		/*while(antenne->users[i]->lePaquet->bitsRestants == 100){
 			printf("produceBit4 i= %d\n",i);
 			packet = antenne->users[i]->lePaquet->nextPacket;	
 			printf("produceBit5i= %d\n",i);	
-		}*/
+		}/
 							
-		printf("produceBit6\n");
 		// Remplissage du paquet 
 		resteARemplir = random;	
 		printf("produceBit7 resteARemplir= %d\n",resteARemplir);	
@@ -100,9 +94,45 @@ void produceBit(Antenne *antenne, int actualTime){
 			resteARemplir -= debordement;
 			printf("produceBit8 debordement=%d \n",debordement);
 		}
-		printf("produceBit9\n");
 			
+	}*/
+	printf("prod1\n");
+
+	for(i = 0; i < (NB_USERS); i++){
+		printf("prod2\n");
+		packet = antenne->users[i]->lePaquet;
+		//recupere le dernier paquet
+		while(packet->nextPacket != NULL)
+			{
+            	packet = packet->nextPacket;
+        	}
+
+		while(random>0){
+			temp = 100 - packet->bitsRestants;
+
+			if((packet->bitsRestants + random) > 100){
+				packet->bitsRestants = 100;
+				packet->dateCreation = actualTime;
+				random = random -temp;
+				//creationnouveaupaquet
+				packet->nextPacket = createPacket();
+				packet = packet->nextPacket;
+			}
+			else{
+				packet->bitsRestants = packet->bitsRestants + random;
+				random = 0;
+
+				if(packet->bitsRestants){
+					packet->dateCreation = actualTime;
+					//creationnouveaupaquet
+					packet->nextPacket = createPacket();
+					packet = packet->nextPacket;
+				}
+			}
+		}
+
 	}
+	printf("prod3\n");
 
 }
 
@@ -112,32 +142,32 @@ int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 	int debordement;
 
 	if(currentUser<(NB_USERS)){
-		printf("consumeBit1\n");
+		//printf("consumeBit1\n");
 		debordement = antenne->users[currentUser]->lePaquet->bitsRestants - antenne->users[currentUser]->SNRActuels[subCarrier];
-		printf("consumeBit2 debordement= %d\n",debordement);
+		//printf("consumeBit2 debordement= %d\n",debordement);
 		// Mise à jour du nombre de bits restants dans le paquet / Consommation des bits 
 		antenne->users[currentUser]->lePaquet->bitsRestants = debordement;
 
 		if(antenne->users[currentUser]->lePaquet->bitsRestants <= 0){
-			printf("consumeBit3\n");
+			//printf("consumeBit3\n");
 
 			// Si ce n'est pas le dernier paquet, on décale les paquets et on continue de consommer 
 			if(antenne->users[currentUser]->lePaquet -> nextPacket != NULL){
-				printf("consumeBit4\n");
+				//printf("consumeBit4\n");
 				antenne->users[currentUser]->lePaquet = antenne->users[currentUser]->lePaquet->nextPacket;
-				printf("consumeBit5\n");
+				//printf("consumeBit5\n");
 				antenne->users[currentUser]->lePaquet->bitsRestants = 100 + debordement;
-				printf("consumeBit6\n");
+				//printf("consumeBit6\n");
 			}
 			// Sinon on marque le buffer comme vide 
 			else{
-				printf("consumeBit7\n");
+				//printf("consumeBit7\n");
 				antenne->users[currentUser]->bufferVide = 1;
-				printf("consumeBit8\n");
+				//printf("consumeBit8\n");
 			}
-			printf("consumeBit9\n");
+			//printf("consumeBit9\n");
 		}
-		printf("consumeBit10\n");
+		//printf("consumeBit10\n");
 	}
 				
 	// On retourne le nombre de bits côtés 
@@ -146,20 +176,19 @@ int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 
 
 
-int MaxUser (Antenne *antenne, int j){
-	User *maxU;
+int MaxUser (Antenne *antenne, int subCarrier){
 	int i = 0;
-	int res;
+	int res = 0;
 
-	for (i = 0; i < NB_USERS ; i++){// parcourt les users 
-		if(antenne->users[i]->SNRActuels[j] > maxU->SNRActuels[j] && !antenne->users[i]->bufferVide){
+
+	for (i = 0; i < NB_USERS ; i++){
+		if((antenne->users[i]->SNRActuels[subCarrier] > antenne->users[res]->SNRActuels[subCarrier]) && (antenne->users[i]->bufferVide == 0)){
 			// si l'User a un meilleur debit, et que son buffer n'est pas vide: il devient le MaxUser 
-			maxU = antenne->users[i];
 			res = i;
 			}
-	
-	return res;
-}
+	}
+
+	return 2;
 }
 
 int empty(Antenne *antenne, int currentUser){
@@ -167,5 +196,3 @@ int empty(Antenne *antenne, int currentUser){
 		return antenne->users[currentUser]->bufferVide;
 	}
 }
-
-

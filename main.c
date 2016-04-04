@@ -4,13 +4,14 @@
 #include "struct.h"
 #include "distribution.h"
 #include "RR.h"
+#include "maxSNR.h"
 #include "initialisation.h"
 
 
 int main(){
 
 	long actualTime = 0;
-	int debitTotal;
+	int debitTotal = 0;
 	int nb_tours = 10;
 	int i;
 
@@ -32,8 +33,13 @@ int main(){
 		/*Initilisations des débits des utilisateurs*/
 		initMatriceDebits(&monAntenne);
 		printf("Main 5\n");			
-		/*Application de l'algorithme et ôtage des bits envoyés*/
-		debitTotal += RR(&monAntenne);
+
+		/*Application de l'algorithme et ôtage des bits envoyés avec RR
+		debitTotal += RR(&monAntenne);*/
+
+		/*Application de l'algorithme et ôtage des bits envoyés avec maxSNR*/
+		debitTotal += maxSNR(&monAntenne);
+
 		printf("Main 6\n");
 		/*ENVOI DE LA TRAME */
 
