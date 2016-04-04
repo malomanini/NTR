@@ -12,7 +12,6 @@ Packet* createPacket(){
 	packet->dateCreation=0;
 	packet->bitsRestants=0;
 	packet->nextPacket = NULL;
-	printf("createPacket\n");
 	return packet;
 }
 
@@ -35,24 +34,17 @@ User* initUser(){
 	}
 
 	user->lePaquet = createPacket();
-	printf("initUser bitsresteant  %d\n",user->lePaquet->bitsRestants);
 	randDist++;
 	return user;
 }
 
 void initAntenne(Antenne *antenne){
 	int i = 0;
-	printf("initAntenne1\n");
 	for(i = 0; i < NB_USERS; i++)
 	{	
-		printf("initAntenne2\n");
 		antenne->users[i]=initUser();
 	}
-	printf("initAntenne3\n");
-	printf("initAntenne SNRmoyen %d\n",antenne->users[0]->SNRmoyen);
-	printf("initAntenne4\n");
-	printf("initAntenne bitsrestant %d\n",antenne->users[0]->lePaquet->bitsRestants);
-	printf("initAntenne dateCreation %d\n",antenne->users[0]->lePaquet->dateCreation);
+	
 }
 
 
@@ -61,7 +53,7 @@ void initMatriceDebits(Antenne *antenne){
 	int i = 0;
 	int j = 0;
 
-	for(i = 0; i<NB_USERS; i++)
+	for(i = 0; i < NB_USERS; i++)
 	{
 		for(j = 0; j<128; j++){
 
@@ -83,34 +75,10 @@ void produceBit(Antenne *antenne, int actualTime){
 
 	// Création d'un nouveau packet 
 	Packet *packet;
-	/*
-	for(i = 0; i < (NB_USERS); i++){
-		printf("produceBittest i= %d de bitsRestants : %d \n",i,antenne->users[i]->lePaquet->bitsRestants );
-		packet = antenne->users[i]->lePaquet;
-		// Recherche de la fin de la chaine (sa boucle a l'infinit je crois faut voir pourquoi)
-		/*while(antenne->users[i]->lePaquet->bitsRestants == 100){
-			printf("produceBit4 i= %d\n",i);
-			packet = antenne->users[i]->lePaquet->nextPacket;	
-			printf("produceBit5i= %d\n",i);	
-		}/
-							
-		// Remplissage du paquet 
-		resteARemplir = random;	
-		printf("produceBit7 resteARemplir= %d\n",resteARemplir);	
-		while(resteARemplir > 0){
-			debordement = resteARemplir - (100 - packet->bitsRestants);
-			packet->bitsRestants = 100;
-			resteARemplir -= debordement;
-			printf("produceBit8 debordement=%d \n",debordement);
-		}
-			
-	}*/
-	printf("************prod1 DEBUT PRODUC5TION************\n");
-
+	
 	for(i = 0; i < (NB_USERS); i++){
 		packet=NULL;
 		random=250;
-		printf("prod2 user :%d bitsRestants = %d \n", i,antenne->users[i]->lePaquet->bitsRestants);
 		packet = antenne->users[i]->lePaquet;
 		//recupere le dernier paquet
 		while(packet->nextPacket != NULL)
@@ -119,22 +87,17 @@ void produceBit(Antenne *antenne, int actualTime){
         	}
 
 		while(random > 0){
-			printf("prod3 user :%d bitsRestants = %d \n", i,packet->bitsRestants);
 			temp = 100 - packet->bitsRestants;
-			printf("temp = %d \n",temp);
 			//si supérieur a 100 il faut utiliser un autre packet
 			if((packet->bitsRestants + random) > 100){
-				printf("packet->bitsRestants = %d \n",packet->bitsRestants);
 
 				packet->bitsRestants = 100;
 				packet->dateCreation = actualTime;
 				random = random - temp;
-				printf("random = %d \n",random);
 				//creationnouveaupaquet
 				packet->nextPacket = createPacket();
 				packet = packet->nextPacket;
 			}else{
-				printf("packet->bitsRestants = %d \n",packet->bitsRestants);
 				packet->bitsRestants = packet->bitsRestants + random;
 				random = 0;
 
@@ -146,10 +109,8 @@ void produceBit(Antenne *antenne, int actualTime){
 				}
 			}
 		}
-printf("prod4 sortit for user :%d bitsRestants = %d \n", i,antenne->users[i]->lePaquet->bitsRestants);
 	}
 
-	printf("************prod4 FIN PRODUCTION************\n");
 
 }
 
