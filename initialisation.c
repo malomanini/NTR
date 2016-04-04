@@ -77,6 +77,7 @@ void produceBit(Antenne *antenne, int actualTime){
 	Packet *packet;
 	
 	for(i = 0; i < (NB_USERS); i++){
+		continuer = 1;
 		packet=NULL;
 		bitsGeneres=1000;
 		packet = antenne->users[i]->lePaquet;
@@ -127,7 +128,6 @@ int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 			theUser->lePaquet = theUser->lePaquet->nextPacket;
 		}
 		else{
-			printf("Plus de bits de l'utilisateur %d\n", currentUser);
 			theUser->lePaquet->bitsRestants = 0;
 			theUser->bufferVide = 1;
 		}
