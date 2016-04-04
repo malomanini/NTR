@@ -10,8 +10,18 @@
 
 int main(){
 
-	long actualTime = 0;
 	int debitTotal = 0;
+	int debitTotalProche = 0;
+	int debitTotalLoin = 0;
+
+	int delaisTotal = 0;
+	int delaisTotalProche = 0;
+	int delaisTotalLoin = 0;
+
+	int nbPaquetsTotal = 0;
+	int nbPaquetsTotalProche = 0;
+	int nbPaquetsTotalLoin = 0;
+
 	int nb_tours = 10;
 
 	int choixAlgo = 0;
@@ -31,10 +41,10 @@ int main(){
 	for(i = 0; i < nb_tours; i++){
 
 		/*Initialisation des paquets utilisateurs*/
-		produceBit(&monAntenne, actualTime);
+		produceBit(&monAntenne);
 		/*Initilisations des débits des utilisateurs*/
 		initMatriceDebits(&monAntenne);		
-
+		
 		/*Application de l'algorithme et ôtage des bits envoyés avec maxSNR*/
 		if(choixAlgo == 1){
 			debitTotal += RR(&monAntenne);
@@ -52,12 +62,31 @@ int main(){
 
 
 		/*Incrémentation du temps*/
-		actualTime += 2;
+		monAntenne.actualTime += 2;
 
 	}
-	
-	printf("\nStatistiques : \n\n");
-	printf("Débit total de la simulation: %d bits/ms\n", (int)(debitTotal/actualTime));
+
+	for(i = 0; i< NB_USERS; i++){
+		delaisTotal += monAntenne.users[i]->sommeDelais;
+		nbPaquetsTotal += monAntenne.users[i]->sommePaquets;
+		if(monAntenne.users[i]->distance == 5){	
+			delaisTotalProche += monAntenne.users[i]->sommeDelais;
+			nbPaquetsTotalProche += monAntenne.users[i]->sommePaquets;
+
+		}
+		else{	
+			delaisTotalLoin += monAntenne.users[i]->sommeDelais;
+			nbPaquetsTotalLoin += monAntenne.users[i]->sommePaquets;
+		}
+
+	}
+
+	printf("\nStatistiques : \n");
+	printf("	Débit total de la simulation: %d bits/ms\n", (int)(debitTotal/monAntenne.actualTime));
+	printf("	Delai moyen : %d ms\n", (int)(delaisTotal/nbPaquetsTotal));
+	printf("	Delai moyen des utilisateurs proches: %d ms\n", (int)(delaisTotalProche/nbPaquetsTotalProche));
+	printf("	Delai moyen des utilisateurs eloignes: %d ms\n", (int)(delaisTotalLoin/nbPaquetsTotalLoin));
+
 
 
 

@@ -6,10 +6,10 @@
 
 int randDist = 0;
 
-Packet* createPacket(){
+Packet* createPacket(time){
 	
 	Packet *packet = malloc(sizeof(Packet));
-	packet->dateCreation=0;
+	packet->dateCreation=time;
 	packet->bitsRestants=0;
 	packet->nextPacket = NULL;
 	return packet;
@@ -27,13 +27,16 @@ User* initUser(){
 	}
 	user->bufferVide=0;
 	user->SNRmoyen=0;
-	user->sommeDelai=0;
+	user->sommeDelais=0;
+	user->sommePaquets = 1;
 	for(i = 0; i<128; i++)
 	{
 		user->SNRActuels[i]=0;
 	}
 
-	user->lePaquet = createPacket();
+	
+	user->lePaquet = createPacket(0);
+
 	randDist++;
 	return user;
 }
@@ -44,9 +47,9 @@ void initAntenne(Antenne *antenne){
 	{	
 		antenne->users[i]=initUser();
 	}
+	antenne->actualTime = 0;
 	
 }
-
 
 
 void initMatriceDebits(Antenne *antenne){
@@ -65,7 +68,7 @@ void initMatriceDebits(Antenne *antenne){
 
 
 //!!! Amélioration possible en ajoutant un LastPacket 
-void produceBit(Antenne *antenne, int actualTime){
+void produceBit(Antenne *antenne){
 	int i = 0;
 	int bitsGeneres ;
 	int debordement = 0;
@@ -92,7 +95,8 @@ void produceBit(Antenne *antenne, int actualTime){
         	if(bitsGeneres > (100 - packet->bitsRestants)){
         		bitsGeneres -= 100 - packet->bitsRestants;
         		packet->bitsRestants = 100;
-        		packet->nextPacket = createPacket();
+        		packet->nextPacket = createPacket(antenne->actualTime);
+        		antenne->users[i]->sommePaquets++;
         		packet = packet->nextPacket;
         	}
         	else{
@@ -117,6 +121,9 @@ int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 	printf(" SNR actuel: %d\n", theUser->SNRActuels[subCarrier]);*/
 	//Si on consomme plus de bits que le paquet en contient
 	if(theUser->lePaquet->bitsRestants < theUser->SNRActuels[subCarrier]){
+		//Mise à jour pour les statistiques
+		theUser->sommeDelais += (antenne->actualTime - theUser->lePaquet->dateCreation);
+		
 		if(theUser->lePaquet->nextPacket != NULL){
 	/*		printf(" Suppression du paquet courant \n Le prochain paquet contient: %d", theUser->lePaquet->nextPacket->bitsRestants);
 			printf(" \n on lui ote %d\n", theUser->SNRActuels[subCarrier] - theUser->lePaquet->bitsRestants);
@@ -130,6 +137,7 @@ int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 		else{
 			theUser->lePaquet->bitsRestants = 0;
 			theUser->bufferVide = 1;
+
 		}
 		// TODO TODO TODO
 		//free(tmpPacket);
