@@ -26,6 +26,7 @@ int main(){
 	for(i = 0; i < nb_tours; i++){
 		/*Initialisation des paquets utilisateurs*/
 		produceBit(&monAntenne, actualTime);
+		printf("main1\n");
 		/*Initilisations des débits des utilisateurs*/
 		initMatriceDebits(&monAntenne);		
 

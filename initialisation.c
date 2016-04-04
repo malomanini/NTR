@@ -64,7 +64,9 @@ void initMatriceDebits(Antenne *antenne){
 	for(i = 0; i<NB_USERS; i++)
 	{
 		for(j = 0; j<128; j++){
+
 			antenne->users[i]->SNRActuels[j] = getSNR(antenne->users[i]->distance);
+			//printf("initMatriceDebits i :%d j :%d bitsRestants = %d \n", i,j,antenne->users[i]->SNRActuels[j]);
 		}
 	}
 }
@@ -103,10 +105,12 @@ void produceBit(Antenne *antenne, int actualTime){
 		}
 			
 	}*/
-	printf("prod1\n");
+	printf("************prod1 DEBUT PRODUC5TION************\n");
 
 	for(i = 0; i < (NB_USERS); i++){
-		printf("prod2 user :%d\n", i);
+		packet=NULL;
+		random=250;
+		printf("prod2 user :%d bitsRestants = %d \n", i,antenne->users[i]->lePaquet->bitsRestants);
 		packet = antenne->users[i]->lePaquet;
 		//recupere le dernier paquet
 		while(packet->nextPacket != NULL)
@@ -114,18 +118,23 @@ void produceBit(Antenne *antenne, int actualTime){
             	packet = packet->nextPacket;
         	}
 
-		while(random>0){
+		while(random > 0){
+			printf("prod3 user :%d bitsRestants = %d \n", i,packet->bitsRestants);
 			temp = 100 - packet->bitsRestants;
-
+			printf("temp = %d \n",temp);
+			//si supérieur a 100 il faut utiliser un autre packet
 			if((packet->bitsRestants + random) > 100){
+				printf("packet->bitsRestants = %d \n",packet->bitsRestants);
+
 				packet->bitsRestants = 100;
 				packet->dateCreation = actualTime;
-				random = random -temp;
+				random = random - temp;
+				printf("random = %d \n",random);
 				//creationnouveaupaquet
 				packet->nextPacket = createPacket();
 				packet = packet->nextPacket;
-			}
-			else{
+			}else{
+				printf("packet->bitsRestants = %d \n",packet->bitsRestants);
 				packet->bitsRestants = packet->bitsRestants + random;
 				random = 0;
 
@@ -137,9 +146,10 @@ void produceBit(Antenne *antenne, int actualTime){
 				}
 			}
 		}
-
+printf("prod4 sortit for user :%d bitsRestants = %d \n", i,antenne->users[i]->lePaquet->bitsRestants);
 	}
-	printf("prod3\n");
+
+	printf("************prod4 FIN PRODUCTION************\n");
 
 }
 
