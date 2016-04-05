@@ -11,8 +11,8 @@
 int main(){
 
 	int debitTotal = 0;
-	int debitTotalProche = 0;
-	int debitTotalLoin = 0;
+	/*int debitTotalProche = 0;
+	int debitTotalLoin = 0;*/
 
 	int delaisTotal = 0;
 	int delaisTotalProche = 0;
@@ -25,6 +25,8 @@ int main(){
 	int nb_tours = 10;
 
 	int choixAlgo = 0;
+
+	int nbBitsgenere = 250;
 	int i;
 
 	Antenne monAntenne;
@@ -33,6 +35,8 @@ int main(){
 	printf("\nSIMULATION NTR\n\n");
 	printf("Nombre de tours pour la simulation: ");
 	scanf("%d", &nb_tours);
+	printf("Nombre de bits à générer (>100) :");
+	scanf("%d", &nbBitsgenere);
 	printf("Algorithme : 1 pour RR, 2 pour MAXSNR :");
 	scanf("%d", &choixAlgo);
 	initAntenne(&monAntenne);
@@ -41,7 +45,7 @@ int main(){
 	for(i = 0; i < nb_tours; i++){
 
 		/*Initialisation des paquets utilisateurs*/
-		produceBit(&monAntenne);
+		produceBit(&monAntenne, nbBitsgenere);
 		/*Initilisations des débits des utilisateurs*/
 		initMatriceDebits(&monAntenne);		
 		
