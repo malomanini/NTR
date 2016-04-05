@@ -82,7 +82,7 @@ void produceBit(Antenne *antenne){
 	for(i = 0; i < (NB_USERS); i++){
 		continuer = 1;
 		packet=NULL;
-		bitsGeneres=1000;
+		bitsGeneres=getNbBit();
 		packet = antenne->users[i]->lePaquet;
 		//recupere le dernier paquet
 		while(packet->nextPacket != NULL)
@@ -95,7 +95,8 @@ void produceBit(Antenne *antenne){
         	if(bitsGeneres > (100 - packet->bitsRestants)){
         		bitsGeneres -= 100 - packet->bitsRestants;
         		packet->bitsRestants = 100;
-        		packet->nextPacket = createPacket(antenne->actualTime);
+        		packet->dateCreation = antenne->actualTime;
+        		packet->nextPacket = createPacket(0);
         		antenne->users[i]->sommePaquets++;
         		packet = packet->nextPacket;
         	}
