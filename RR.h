@@ -3,5 +3,6 @@
 
 #include "struct.h"
 
-int RR(Antenne *antenne);
+int RR(Antenne *antenne, int nb_user);
+
 #endif

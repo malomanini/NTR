@@ -2,7 +2,7 @@
 #define STRUCT_H
 
 #define NB_SUBCARRIERS 128
-#define NB_USERS 10
+#define NB_MAX_USERS 250
 #define NB_TIME_SLOTS 5 
 #define BUFFERS_PER_USER 10
 #define PACKETS_CREATION_RATIO 50
@@ -23,14 +23,16 @@ struct User
 	int bufferVide;
 	int SNRmoyen;
 	int SNRActuels[NB_SUBCARRIERS];
-	int sommeDelai;
+	int sommeDelais;
+	int sommePaquets;
 	Packet *lePaquet;
 };
 
 typedef struct Antenne Antenne;
 struct Antenne
 {
-	User *users[NB_USERS];
+	User *users[NB_MAX_USERS];
+	int actualTime;
 };
 
 #endif

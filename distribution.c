@@ -29,7 +29,7 @@ double gaussrand()
 
 	phase = 1 - phase;
 
-	return X;
+	return X; 
 }
 
 int getSNR(int distance){
@@ -42,6 +42,18 @@ int getSNR(int distance){
 	if(r > 10 || r < 0){
 		return getSNR(distance);
 	}
+	return r;
+}
 
+int getNbBit(){
+	int r = 0;
+	double temp = ((gaussrand()*50)+ 250 );
+	r = (int)temp;
+	if(r%2){
+		r++;
+	}
+	if(r > 400 || r < 150){
+		return getNbBit();
+	}
 	return r;
 }

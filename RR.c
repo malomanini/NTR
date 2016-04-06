@@ -6,7 +6,7 @@
 #include "distribution.h"
 #include "initialisation.h"
 
-int RR(Antenne *antenne){
+int RR(Antenne *antenne, int nb_user){
 	int i = 0;
 	int j = 0;
 	int currentUser = 0;
@@ -16,7 +16,7 @@ int RR(Antenne *antenne){
 		for(j = 0; j< NB_SUBCARRIERS ; j++){
 
 			debitTotalTrame += consumeBit(antenne, currentUser, j);
-			currentUser = (currentUser+1) % NB_USERS;
+			currentUser = (currentUser+1) % nb_user;
 		}
 	}
 	return debitTotalTrame;
