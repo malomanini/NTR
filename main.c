@@ -47,7 +47,7 @@ int main(){
 
 	initAntenne(&monAntenne, nb_user);
 
-	while(nb_user <= 30){
+	while(nb_user <= 150){
 		/*---BOUCLE PRINCIPALE---*/
 		for(i = 0; i < nb_tours; i++){
 			
@@ -89,9 +89,7 @@ int main(){
 					nbPaquetsNonEnvoyes++;
 					nbPaquetsTotal++;
 					tmpPacket = tmpPacket->nextPacket;
-					/*if(monAntenne.users[i]->lePaquet->nextPacket !=NULL){printf("couilledanslepaté\n");}
-				
-					printf("PAQUETS RESTANTS ! valeur de bufferVide: %d\n ", monAntenne.users[i]->bufferVide);
+					/*printf("PAQUETS RESTANTS ! valeur de bufferVide: %d\n ", monAntenne.users[i]->bufferVide);
 				*/
 				}
 
@@ -109,14 +107,11 @@ int main(){
 				nbPaquetsTotalLoin += monAntenne.users[i]->sommePaquets;
 			}
 
-
-
-
 		}
 
 
 
-		printf("\n--------------------------------------------------------------\n");
+		printf("--------------------------------------------------------------\n");
 		printf("Statistiques pour %d utilisateurs: \n", nb_user);
 		printf("	Débit total : %.0f bits\n", debitTotal);
 		printf("	Somme des delais: : %.3f ms\n", sommeDelais);

@@ -10,7 +10,7 @@ Packet* createPacket(time){
 	
 	Packet *packet = malloc(sizeof(Packet));
 	packet->dateCreation=time;
-	packet->bitsRestants=0;
+	packet->bitsRestants = 0;
 	packet->nextPacket = NULL;
 	return packet;
 }
@@ -23,7 +23,7 @@ User* initUser(){
 		user->distance=3;
 	}
 	else{
-		user->distance=5;
+		user->distance=6;
 	}
 
 	user->bufferVide=1;
@@ -83,12 +83,15 @@ void produceBit(Antenne *antenne, int nbBitsgenere, int nb_user){
 	Packet *packet;
 	
 	for(i = 0; i < (nb_user); i++){
+
+		antenne->users[i]->bufferVide = 0;
+
 		continuer = 1;
 		packet=NULL;
 		bitsGeneres=nbBitsgenere;
 		packet = antenne->users[i]->lePaquet;
 		//recupere le dernier paquet
-		antenne->users[i]->bufferVide == 0;
+
 		while(packet->nextPacket != NULL)
 		{
             packet = packet->nextPacket;
@@ -101,6 +104,8 @@ void produceBit(Antenne *antenne, int nbBitsgenere, int nb_user){
         		bitsGeneres -= 100 - packet->bitsRestants;
         		packet->bitsRestants = 100;
         		packet->nextPacket = createPacket(0);
+
+
         		antenne->users[i]->sommePaquets++;
         		packet = packet->nextPacket;
         	}
@@ -132,8 +137,7 @@ int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 		theUser->sommeDelais += (antenne->actualTime - theUser->lePaquet->dateCreation);
 		
 		if(theUser->lePaquet->nextPacket != NULL){
-	/*		printf(" Suppression du paquet courant \n Le prochain paquet contient: %d", theUser->lePaquet->nextPacket->bitsRestants);
-			printf(" \n on lui ote %d\n", theUser->SNRActuels[subCarrier] - theUser->lePaquet->bitsRestants);
+	/*		
 	*/		
 			//On soustrait au prochain paquet le SNR moins le contenu du paquet actuel 
 			bitConsommes = theUser->SNRActuels[subCarrier];
@@ -143,11 +147,13 @@ int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 			theUser->lePaquet = theUser->lePaquet->nextPacket;
 		}
 		else{
+			
 			bitConsommes = theUser->lePaquet->bitsRestants;
 			theUser->lePaquet->bitsRestants = 0;
-			theUser->bufferVide = 1;
 
-			if(theUser->lePaquet->nextPacket !=NULL){printf("couilledanslepaté\n");}
+			theUser->bufferVide = 1;
+			
+
 		}
 		// TODO TODO TODO
 		//free(tmpPacket);

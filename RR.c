@@ -16,6 +16,7 @@ int RR(Antenne *antenne, int nb_user){
 		for(j = 0; j< NB_SUBCARRIERS ; j++){
 
 			debitTotalTrame += consumeBit(antenne, currentUser, j);
+			
 			currentUser = (currentUser+1) % nb_user;
 		}
 	}
