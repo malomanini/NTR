@@ -26,7 +26,7 @@ User* initUser(){
 		user->distance=5;
 	}
 
-	user->bufferVide=0;
+	user->bufferVide=1;
 	user->SNRmoyen=0;
 	user->sommeDelais=0;
 	user->sommePaquets = 1;
@@ -88,6 +88,7 @@ void produceBit(Antenne *antenne, int nbBitsgenere, int nb_user){
 		bitsGeneres=nbBitsgenere;
 		packet = antenne->users[i]->lePaquet;
 		//recupere le dernier paquet
+		antenne->users[i]->bufferVide == 0;
 		while(packet->nextPacket != NULL)
 		{
             packet = packet->nextPacket;
@@ -124,6 +125,7 @@ int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 /*
 	printf("\n bits restants : %d\n", theUser->lePaquet->bitsRestants);
 	printf(" SNR actuel: %d\n", theUser->SNRActuels[subCarrier]);*/
+
 	//Si on consomme plus de bits que le paquet en contient
 	if(theUser->lePaquet->bitsRestants < theUser->SNRActuels[subCarrier]){
 		//Mise à jour pour les statistiques
@@ -145,6 +147,7 @@ int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 			theUser->lePaquet->bitsRestants = 0;
 			theUser->bufferVide = 1;
 
+			if(theUser->lePaquet->nextPacket !=NULL){printf("couilledanslepaté\n");}
 		}
 		// TODO TODO TODO
 		//free(tmpPacket);
@@ -167,7 +170,7 @@ int MaxUser (Antenne *antenne, int subCarrier, int nb_user){
 	int res = 0;
 
 	for (i = 0; i < nb_user ; i++){
-		if((antenne->users[i]->SNRActuels[subCarrier] > antenne->users[res]->SNRActuels[subCarrier]) && (antenne->users[i]->bufferVide == 0)){
+		if((antenne->users[i]->SNRActuels[subCarrier] >= antenne->users[res]->SNRActuels[subCarrier]) && (antenne->users[i]->bufferVide == 0)){
 			// si l'User a un meilleur debit, et que son buffer n'est pas vide: il devient le MaxUser 
 			res = i;
 		}
