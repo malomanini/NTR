@@ -43,11 +43,7 @@ User* initUser(){
 
 void initAntenne(Antenne *antenne, int nb_user){
 	int i = 0;
-<<<<<<< HEAD
 	for(i = 0; i < nb_user; i++)
-=======
-	for(i = 0; i < NB_USERS; i++)
->>>>>>> origin/master
 	{	
 		antenne->users[i]=initUser();
 	}
@@ -56,19 +52,11 @@ void initAntenne(Antenne *antenne, int nb_user){
 }
 
 
-<<<<<<< HEAD
 void initMatriceDebits(Antenne *antenne, int nb_user){
 	int i = 0;
 	int j = 0;
 
 	for(i = 0; i < nb_user; i++)
-=======
-void initMatriceDebits(Antenne *antenne){
-	int i = 0;
-	int j = 0;
-
-	for(i = 0; i < NB_USERS; i++)
->>>>>>> origin/master
 	{
 		for(j = 0; j<128; j++){
 
@@ -80,11 +68,7 @@ void initMatriceDebits(Antenne *antenne){
 
 
 //!!! Amélioration possible en ajoutant un LastPacket 
-<<<<<<< HEAD
 void produceBit(Antenne *antenne, int nbBitsgenere, int nb_user){
-=======
-void produceBit(Antenne *antenne, int nbBitsgenere){
->>>>>>> origin/master
 	int i = 0;
 	int bitsGeneres ;
 	int debordement = 0;
@@ -95,11 +79,7 @@ void produceBit(Antenne *antenne, int nbBitsgenere){
 	// Création d'un nouveau packet 
 	Packet *packet;
 	
-<<<<<<< HEAD
 	for(i = 0; i < (nb_user); i++){
-=======
-	for(i = 0; i < (NB_USERS); i++){
->>>>>>> origin/master
 		continuer = 1;
 		packet=NULL;
 		bitsGeneres=nbBitsgenere;
@@ -179,19 +159,11 @@ int consumeBit(Antenne *antenne, int currentUser, int subCarrier){
 
 
 
-<<<<<<< HEAD
 int MaxUser (Antenne *antenne, int subCarrier, int nb_user){
 	int i = 0;
 	int res = 0;
 
 	for (i = 0; i < nb_user ; i++){
-=======
-int MaxUser (Antenne *antenne, int subCarrier){
-	int i = 0;
-	int res = 0;
-
-	for (i = 0; i < NB_USERS ; i++){
->>>>>>> origin/master
 		if((antenne->users[i]->SNRActuels[subCarrier] > antenne->users[res]->SNRActuels[subCarrier]) && (antenne->users[i]->bufferVide == 0)){
 			// si l'User a un meilleur debit, et que son buffer n'est pas vide: il devient le MaxUser 
 			res = i;
@@ -205,8 +177,4 @@ int empty(Antenne *antenne, int currentUser, int nb_user){
 	if(currentUser < nb_user){
 		return antenne->users[currentUser]->bufferVide;
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/master

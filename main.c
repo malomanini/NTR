@@ -23,14 +23,6 @@ int main(){
 	int nbPaquetsTotalLoin = 0;
 
 	int nb_tours = 10;
-<<<<<<< HEAD
-=======
-
-	int choixAlgo = 0;
-
-	int nbBitsgenere = 250;
-	int i;
->>>>>>> origin/master
 
 	int choixAlgo = 0;
 
@@ -41,29 +33,21 @@ int main(){
 
 	/*---INITIALISATIONS---*/
 	printf("\nSIMULATION NTR\n\n");
-<<<<<<< HEAD
 	printf("Nombre d'utilisateur pour la simulation: ");
 	scanf("%d", &nb_user);
-=======
->>>>>>> origin/master
 	printf("Nombre de tours pour la simulation: ");
 	scanf("%d", &nb_tours);
 	printf("Nombre de bits à générer (>100) :");
 	scanf("%d", &nbBitsgenere);
 	printf("Algorithme : 1 pour RR, 2 pour MAXSNR :");
 	scanf("%d", &choixAlgo);
-<<<<<<< HEAD
 
 	initAntenne(&monAntenne, nb_user);
-=======
-	initAntenne(&monAntenne);
->>>>>>> origin/master
 
 	/*---BOUCLE PRINCIPALE---*/
 	for(i = 0; i < nb_tours; i++){
 
 		/*Initialisation des paquets utilisateurs*/
-<<<<<<< HEAD
 		produceBit(&monAntenne, nbBitsgenere, nb_user);
 		/*Initilisations des débits des utilisateurs*/
 		initMatriceDebits(&monAntenne, nb_user);		
@@ -74,18 +58,6 @@ int main(){
 		}
 		else if(choixAlgo == 2){
 			debitTotal += maxSNR(&monAntenne, nb_user);
-=======
-		produceBit(&monAntenne, nbBitsgenere);
-		/*Initilisations des débits des utilisateurs*/
-		initMatriceDebits(&monAntenne);		
-		
-		/*Application de l'algorithme et ôtage des bits envoyés avec maxSNR*/
-		if(choixAlgo == 1){
-			debitTotal += RR(&monAntenne);
-		}
-		else if(choixAlgo == 2){
-			debitTotal += maxSNR(&monAntenne);
->>>>>>> origin/master
 		}
 		else{
 			printf("choix de l'algorithme mauvais. Arret. \n");
@@ -101,11 +73,7 @@ int main(){
 
 	}
 
-<<<<<<< HEAD
 	for(i = 0; i< nb_user; i++){
-=======
-	for(i = 0; i< NB_USERS; i++){
->>>>>>> origin/master
 		delaisTotal += monAntenne.users[i]->sommeDelais;
 		nbPaquetsTotal += monAntenne.users[i]->sommePaquets;
 		if(monAntenne.users[i]->distance == 5){	

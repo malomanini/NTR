@@ -31,11 +31,7 @@ struct User
 typedef struct Antenne Antenne;
 struct Antenne
 {
-<<<<<<< HEAD
 	User *users[NB_MAX_USERS];
-=======
-	User *users[NB_USERS];
->>>>>>> origin/master
 	int actualTime;
 };
 
