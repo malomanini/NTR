@@ -25,10 +25,12 @@ User* initUser(){
 	else{
 		user->distance=5;
 	}
+
 	user->bufferVide=0;
 	user->SNRmoyen=0;
 	user->sommeDelais=0;
 	user->sommePaquets = 1;
+	
 	for(i = 0; i<128; i++)
 	{
 		user->SNRActuels[i]=0;
@@ -48,6 +50,7 @@ void initAntenne(Antenne *antenne, int nb_user){
 		antenne->users[i]=initUser();
 	}
 	antenne->actualTime = 0;
+
 	
 }
 
