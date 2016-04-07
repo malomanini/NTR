@@ -5,6 +5,7 @@
 #include "distribution.h"
 #include "RR.h"
 #include "maxSNR.h"
+#include "PF.h"
 #include "initialisation.h"
 
 
@@ -42,7 +43,7 @@ int main(){
 	scanf("%d", &nb_tours);
 	printf("Nombre de bits à générer (>100) :");
 	scanf("%d", &nbBitsgenere);
-	printf("Algorithme : 1 pour RR, 2 pour MAXSNR :");
+	printf("Algorithme : 1 pour RR, 2 pour MAXSNR, 3 pour PF :");
 	scanf("%d", &choixAlgo);
 
 	initAntenne(&monAntenne, nb_user);
@@ -72,6 +73,9 @@ int main(){
 			}
 			else if(choixAlgo == 2){
 				debitTotal += (double)maxSNR(&monAntenne, nb_user);
+			}
+			else if(choixAlgo == 3){
+				debitTotal += (double)PF(&monAntenne, nb_user);
 			}
 			else{
 				printf("choix de l'algorithme mauvais. Arret. \n");
