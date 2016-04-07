@@ -46,6 +46,16 @@ int main(){
 	scanf("%d", &choixAlgo);
 
 	initAntenne(&monAntenne, nb_user);
+	
+	fichier = fopen("test.csv", "w+");
+
+	if (fichier != NULL)
+	{
+	fprintf(fichier,"nb_user=%d;nb_tours=%d;nbBitsgenere=%d;choixAlgo=%d;\n",nb_user, nb_tours, nbBitsgenere, choixAlgo);
+	fprintf(fichier,"nb_user;débit;délais\n");
+
+	fclose(fichier);
+	}
 
 	while(nb_user <= 150){
 		/*---BOUCLE PRINCIPALE---*/
@@ -130,12 +140,12 @@ int main(){
 	    if (fichier != NULL)
 	    {
 	 
-	  /*     fprintf(fichier,"%d;%d;%d;%d\n", debitTotal/monAntenne.actualTime, delaisTotal/nbPaquetsTotal, delaisTotalProche/nbPaquetsTotalProche, delaisTotalLoin/nbPaquetsTotalLoin);
-	 */
+	        fprintf(fichier,"%d;%.0f;%.0f\n", nb_user, debitTotal/monAntenne.actualTime, sommeDelais/nbPaquetsTotal);
+	 
 		fclose(fichier);
 	    }
 
-		nb_user=nb_user+2;
+		nb_user=nb_user+4;
 			
 		debitTotal = 0;
 		
