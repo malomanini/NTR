@@ -14,8 +14,8 @@ int main(){
 	double debitTotal = 0;
 
 	double sommeDelais = 0;
-	int sommeDelaisProche = 0;
-	int sommeDelaisLoin = 0;
+	double sommeDelaisProche = 0;
+	double sommeDelaisLoin = 0;
 
 	int nbPaquetsTotal = 0;
 	int nbPaquetsNonEnvoyes = 0;
@@ -90,24 +90,37 @@ int main(){
 
 
 		for(i = 0; i< nb_user; i++){
-			/* Récupération des délais restants dans les paquets non envoyes */
+
+			/* Récupération des délais et nb de paquets restants dans les paquets non envoyes */
 			if(monAntenne.users[i]->lePaquet != NULL){
 
 				tmpPacket = monAntenne.users[i]->lePaquet;
 				while(tmpPacket->nextPacket != NULL){
+					/* Stats globales */
 					sommeDelais += (monAntenne.actualTime - tmpPacket->dateCreation);
 					nbPaquetsNonEnvoyes++;
 					nbPaquetsTotal++;
+
+					/* Stats par distance */
+					if(monAntenne.users[i]->distance == 3){	
+						sommeDelaisProche += (monAntenne.actualTime - tmpPacket->dateCreation);
+						nbPaquetsTotalProche ++;
+					}
+					else{
+						sommeDelaisProche += (monAntenne.actualTime - tmpPacket->dateCreation);
+						nbPaquetsTotalLoin ++;
+					}
 					tmpPacket = tmpPacket->nextPacket;
 					/*printf("PAQUETS RESTANTS ! valeur de bufferVide: %d\n ", monAntenne.users[i]->bufferVide);
 				*/
 				}
 
 			}
+
 			/* Récupération des delais et paquets enregistrés */
 			sommeDelais += monAntenne.users[i]->sommeDelais;
 			nbPaquetsTotal += monAntenne.users[i]->sommePaquets;
-			if(monAntenne.users[i]->distance == 5){	
+			if(monAntenne.users[i]->distance == 6){	
 				sommeDelaisProche += monAntenne.users[i]->sommeDelais;
 				nbPaquetsTotalProche += monAntenne.users[i]->sommePaquets;
 
@@ -127,11 +140,12 @@ int main(){
 		printf("	Somme des delais: : %.3f ms\n", sommeDelais);
 		printf("	Débit total de la simulation: %.3f bits/ms\n", (double)(debitTotal/monAntenne.actualTime));
 		printf("	Delai moyen : %.3f ms\n", (double)(sommeDelais/nbPaquetsTotal));
-		printf("	nbPaquetsNonEnvoyes : %d ||nbPaquetsTotal : %d \n", nbPaquetsNonEnvoyes, nbPaquetsTotal);
-		/*
-		printf("	Delai moyen des utilisateurs proches: %d ms\n", (int)(sommeDelaisProche/nbPaquetsTotalProche));
-		printf("	Delai moyen des utilisateurs eloignes: %d ms\n", (int)(sommeDelaisLoin/nbPaquetsTotalLoin));
-*/
+		printf("	Delai moyen des utilisateurs proches: %.3f ms\n", (double)(sommeDelaisProche/nbPaquetsTotalProche));
+		printf("	Delai moyen des utilisateurs eloignes: %.3f ms\n", (double)(sommeDelaisLoin/nbPaquetsTotalLoin));
+		printf("	nbPaquetsNonEnvoyes : %d || nbPaquetsTotal : %d \n", nbPaquetsNonEnvoyes, nbPaquetsTotal);
+		
+		
+
 
 	    
  
