@@ -53,7 +53,7 @@ int main(){
 	if (fichier != NULL)
 	{
 	fprintf(fichier,"nb_user=%d;nb_tours=%d;nbBitsgenere=%d;choixAlgo=%d;\n",nb_user, nb_tours, nbBitsgenere, choixAlgo);
-	fprintf(fichier,"nb_user;débit;délais\n");
+	fprintf(fichier,"nb_user;débit;délais;delai_proche;delai_loin\n");
 
 	fclose(fichier);
 	}
@@ -158,7 +158,7 @@ int main(){
 	    if (fichier != NULL)
 	    {
 	 
-	        fprintf(fichier,"%d;%.0f;%.0f\n", nb_user, debitTotal/monAntenne.actualTime, sommeDelais/nbPaquetsTotal);
+	        fprintf(fichier,"%d;%.0f;%.0f;%.0f;%.0f\n", nb_user, debitTotal/monAntenne.actualTime, sommeDelais/nbPaquetsTotal,sommeDelaisProche/nbPaquetsTotalProche,sommeDelaisLoin/nbPaquetsTotalLoin);
 	 
 		fclose(fichier);
 	    }
